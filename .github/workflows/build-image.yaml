@@ -1,0 +1,143 @@
+name: build
+
+on:
+  push:
+    branches: [develop, main]
+    tags:
+      - 'v*'
+
+jobs:
+  # ------------------------------------------------------------
+  # Resolve release tag from ref
+  # ------------------------------------------------------------
+  release-meta:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: meta
+        run: |
+          set -euo pipefail
+          if [[ "${GITHUB_REF}" == "refs/heads/develop" ]]; then
+            TAG="latest-dev"
+          elif [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            TAG="latest"
+          elif [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG="${GITHUB_REF#refs/tags/v}"
+
+            # --------------------------------------------------
+            # Validate against release.yaml
+            # --------------------------------------------------
+            RELEASE_VERSION=$(yq -r '.image_version' release.yaml)
+
+            if [[ -z "${RELEASE_VERSION}" || "${RELEASE_VERSION}" == "null" ]]; then
+              echo "image_version not found in release.yaml"
+              exit 1
+            fi
+
+            if [[ "${TAG}" != "${RELEASE_VERSION}" ]]; then
+              echo "Git tag v${TAG} does not match release.yaml version ${RELEASE_VERSION}"
+              exit 1
+            fi
+          else
+            echo "Unsupported ref ${GITHUB_REF}"
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+  # ------------------------------------------------------------
+  # Build, scan, SBOM, push
+  # ------------------------------------------------------------
+  build-scan-push:
+    needs: release-meta
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install tooling
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq skopeo
+          curl -sL https://github.com/oras-project/oras/releases/download/v1.2.2/oras_1.2.2_linux_amd64.tar.gz | tar -xz oras
+          sudo mv oras /usr/local/bin/oras
+
+      - name: Configure Docker Hub auth for Kaniko
+        run: |
+          if [[ -n "${{ secrets.dockerhub-username }}" ]]; then
+            mkdir -p $HOME/.docker
+            cat > $HOME/.docker/config.json <<EOF
+          {
+              "auths": {
+                "https://index.docker.io/v1/": {
+                  "auth": "$(echo -n "${{ secrets.dockerhub-username }}:${{ secrets.dockerhub-token }}" | base64 -w0)"
+                }
+              }
+          }
+          EOF
+          fi
+
+      - name: Build image with Kaniko (to tar)
+        uses: docker://gcr.io/kaniko-project/executor:debug
+        env:
+          DOCKER_CONFIG: /github/home/.docker
+        with:
+          args: >
+            --context .
+            --dockerfile Dockerfile
+            --no-push
+            --tar-path image.tar
+
+      # --------------------------------------------------------
+      # Trivy scan (relaxed for now)
+      # --------------------------------------------------------
+      - name: Trivy scan (debug mode)
+        uses: docker://aquasec/trivy:0.50.2
+        env:
+          TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db
+        with:
+          args: >
+            image
+            --input image.tar
+            --severity HIGH,CRITICAL
+            --exit-code 0
+            --no-progress
+
+      - name: Generate SBOM (SPDX JSON)
+        uses: docker://aquasec/trivy:0.50.2
+        env:
+          TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db
+        with:
+          args: >
+            image
+            --input image.tar
+            --format spdx-json
+            --output sbom.spdx.json
+
+      # --------------------------------------------------------
+      # Push image and attach SBOM
+      # --------------------------------------------------------
+      - name: Push image with Skopeo
+        id: push
+        run: |
+          set -euo pipefail
+
+          TAG=${{ needs.release-meta.outputs.tag }}
+          REGISTRY=$(yq -r '.image_registry' release.yaml)
+          IMAGE_PREFIX=$(yq -r '.image_prefix' release.yaml)
+          IMAGE=$(yq -r '.image_name' release.yaml)
+
+          IMAGE_REF="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${TAG}"
+
+          skopeo copy \
+            --dest-creds="${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+            docker-archive:image.tar \
+            docker://${IMAGE_REF}
+
+          DIGEST=$(skopeo inspect \
+            --creds="${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
+            docker://${IMAGE_REF} \
+            | jq -r .Digest)
+
+          echo "${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}@${DIGEST}" > image.digest
