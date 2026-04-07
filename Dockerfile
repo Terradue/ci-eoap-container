@@ -25,7 +25,7 @@ RUN microdnf -y update && \
       'gpgkey=https://aquasecurity.github.io/trivy-repo/rpm/public.key' \
       > /etc/yum.repos.d/trivy.repo && \
     microdnf -y install trivy && \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt hatch && \
+    pip3 install --no-cache-dir -r /tmp/requirements.txt hatch ruff pre-commit && \
     curl -fL "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" \
       -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq && \
