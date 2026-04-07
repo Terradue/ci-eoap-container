@@ -5,6 +5,7 @@ ENV HOME=/home/neo
 
 ARG YQ_VERSION=v4.44.3
 ARG ORAS_VERSION=1.2.2
+ARG TASK_VERSION=v3.49.1
 
 COPY requirements.txt /tmp/requirements.txt
 
@@ -14,7 +15,7 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
       -c "Default Neo User" neo
 
 RUN microdnf -y update && \
-    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq && \
+    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git && \
     printf '%s\n' \
       '[trivy]' \
       'name=Trivy repository' \
@@ -33,4 +34,9 @@ RUN microdnf -y update && \
     tar -xzf /tmp/oras.tar.gz -C /tmp oras && \
     install -m 0755 /tmp/oras /usr/local/bin/oras && \
     rm -rf /tmp/oras /tmp/oras.tar.gz && \
+    curl -fL https://github.com/go-task/task/releases/download/${TASK_VERSION}/task_linux_amd64.tar.gz \
+      -o /tmp/task.tar.gz && \
+    tar -xzf /tmp/task.tar.gz -C /tmp task && \
+    install -m 0755 /tmp/task /usr/local/bin/task && \
+    rm -rf /tmp/task /tmp/task.tar.gz && \
     microdnf clean all
