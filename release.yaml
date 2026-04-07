@@ -1,4 +1,4 @@
 image_name: ci-eoap-container
 image_prefix: terradue
-image_version: 1.0.1
+image_version: 1.1.0
 image_registry: ghcr.io
