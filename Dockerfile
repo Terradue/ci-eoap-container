@@ -40,3 +40,11 @@ RUN microdnf -y update && \
     install -m 0755 /tmp/task /usr/local/bin/task && \
     rm -rf /tmp/task /tmp/task.tar.gz && \
     microdnf clean all
+
+RUN curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+RUN VERSION=1.0.3 && \
+    curl -L -o /tmp/helm-unittest.tgz "https://github.com/helm-unittest/helm-unittest/releases/download/v${VERSION}/helm-unittest-linux-amd64-${VERSION}.tgz" && \
+    tar -C /tmp -xzf /tmp/helm-unittest.tgz && \
+    mv /tmp/untt /usr/local/bin/helm-unittest && \
+    chmod +x /usr/local/bin/helm-unittest
