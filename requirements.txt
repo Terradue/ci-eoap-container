@@ -1,4 +1,4 @@
 cwltool==3.1.20260315121657
 transpiler-mate==0.43.0
-cwl2ogc==0.15.0
-cwl2puml==0.40.0
+cwl2ogc==0.16.0
+cwl2puml==0.41.0
