@@ -16,7 +16,6 @@ Provide a single CI runtime with tooling to:
 ## Included tools
 
 - `cwltool`
-- `cwl2ogc`
 - `transpiler-mate`
 - `cwl2puml`
 - `skopeo`
@@ -45,7 +44,7 @@ cwltool --validate ./workflow.cwl
 ### 2) Validate OGC API Processes compatibility
 
 ```bash
-cwl2ogc ./workflow.cwl
+transpiler-mate ogcprocesses ./workflow.cwl
 ```
 
 ### 3) Transpile metadata with transpiler-mate
