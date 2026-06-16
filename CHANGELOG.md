@@ -10,8 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### [1.6.0] - 2026-06-16
 
 - Advanced the development image version to `1.6.0`.
-- Bumped `cwl2puml` from `0.41.0` to `0.43.0`.
-- Bumped `transpiler-mate` from `0.43.0` to `0.44.0`.
+- Bumped `cwl2puml` from `0.41.0` to `0.44.0`.
+- Bumped `transpiler-mate` from `0.43.0` to `0.45.0`.
 - `cwl2ogc` CLI removed in favour of `transpiler-mate ogcprocesses`
 
 ### [1.5.0] - 2026-04-10
