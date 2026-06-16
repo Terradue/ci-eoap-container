@@ -15,7 +15,7 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
       -c "Default Neo User" neo
 
 RUN microdnf -y update && \
-    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git && \
+    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang && \
     printf '%s\n' \
       '[trivy]' \
       'name=Trivy repository' \
