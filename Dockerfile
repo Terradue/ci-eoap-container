@@ -15,7 +15,7 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
       -c "Default Neo User" neo
 
 RUN microdnf -y update && \
-    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang && \
+    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang wget && \
     printf '%s\n' \
       '[trivy]' \
       'name=Trivy repository' \
@@ -48,3 +48,5 @@ RUN VERSION=1.0.3 && \
     tar -C /tmp -xzf /tmp/helm-unittest.tgz && \
     mv /tmp/untt /usr/local/bin/helm-unittest && \
     chmod +x /usr/local/bin/helm-unittest
+
+RUN helm plugin install https://github.com/chartmuseum/helm-push && helm cm-push --help
