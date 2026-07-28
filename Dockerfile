@@ -49,4 +49,6 @@ RUN VERSION=1.0.3 && \
     mv /tmp/untt /usr/local/bin/helm-unittest && \
     chmod +x /usr/local/bin/helm-unittest
 
+ENV PATH="/usr/bin:/usr/local/bin:/bin:${PATH}"
+
 RUN helm plugin install https://github.com/chartmuseum/helm-push && helm cm-push --help
