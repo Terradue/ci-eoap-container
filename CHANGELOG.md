@@ -7,14 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### [1.6.0] - 2026-06-16
+### Added
+
+### Changed
+
+### Deprecated
+
+### Removed
+
+### Fixed
+
+### Security
+
+## [1.11.0] - 2026-07-31
+
+### Changed
+
+- Advanced the image version from `1.10.0` to `1.11.0`.
+- Bumped `transpiler-mate` from `0.49.0` to `0.50.0`.
+
+## [1.10.0] - 2026-07-29
+
+### Changed
+
+- Advanced the image version from `1.8.0` to `1.10.0`.
+- Bumped `cwltool` from `3.1.20260315121657` to `3.2.20260720092025`.
+- Bumped `transpiler-mate` from `0.47.0` to `0.49.0`.
+- Bumped `cwl2puml` from `0.45.0` to `0.47.0`.
+
+## [1.8.0] - 2026-07-28
+
+### Added
+
+- Added `wget` to the container image.
+- Added the ChartMuseum `helm-push` plugin.
+
+### Changed
+
+- Set an explicit executable search path that includes `/usr/local/bin`.
+- Advanced the image version from `1.7.0` to `1.8.0`.
+- Bumped `transpiler-mate` from `0.46.0` to `0.47.0`.
+- Bumped `cwl2puml` from `0.44.0` to `0.45.0`.
+
+## [1.7.0] - 2026-06-26
+
+### Changed
+
+- Advanced the image version from `1.6.0` to `1.7.0`.
+- Bumped `transpiler-mate` from `0.45.0` to `0.46.0` to ensure the `org.opencontainers.image.description` OCI annotation is serialized on one line.
+
+## [1.6.0] - 2026-06-16
+
+### Changed
 
 - Advanced the development image version to `1.6.0`.
 - Bumped `cwl2puml` from `0.41.0` to `0.44.0`.
 - Bumped `transpiler-mate` from `0.43.0` to `0.45.0`.
 - `cwl2ogc` CLI removed in favour of `transpiler-mate ogcprocesses`
 
-### [1.5.0] - 2026-04-10
+## [1.5.0] - 2026-04-10
+
+### Changed
 
 - Advanced the development image version to `1.5.0`.
 - Bumped `cwl2puml` from `0.40.0` to `0.41.0`.
@@ -88,7 +141,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `release.yaml` image metadata for `ghcr.io/terradue/ci-eoap-container:1.0.0`.
 - Added README documentation with build and CI usage examples.
 
-[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v1.6.0...HEAD
+[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v1.10.0...HEAD
+[1.10.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.8.0...v1.10.0
+[1.8.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.7.0...v1.8.0
+[1.7.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.6.0...v1.7.0
 [1.6.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.5.0...v1.6.0
 [1.5.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.4.0...v1.5.0
 [1.4.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.3.0...v1.4.0
