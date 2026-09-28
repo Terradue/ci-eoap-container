@@ -1,3 +1,11 @@
 cwltool==3.2.20260720092025
-transpiler-mate==0.50.0
-cwl2puml==0.47.0
+transpiler-mate-api==1.0.1
+transpiler-mate-runtime==1.1.1
+cwl2codemeta==0.1.1
+cwl2markdown==0.2.1
+cwl2oci==0.1.1
+cwl2ogc==0.22.1
+cwl2puml==0.49.1
+cwl2ro-crate==0.1.1
+cwl2sbom==0.1.1
+cwl2webgl==0.1.1
