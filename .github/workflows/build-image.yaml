@@ -52,6 +52,9 @@ jobs:
   build-scan-push:
     needs: release-meta
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
 
     steps:
       - uses: actions/checkout@v4
@@ -116,7 +119,7 @@ jobs:
             --output sbom.spdx.json
 
       # --------------------------------------------------------
-      # Push image and attach SBOM
+      # Push image and attach license notices
       # --------------------------------------------------------
       - name: Push image with Skopeo
         id: push
@@ -131,13 +134,34 @@ jobs:
           IMAGE_REF="${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}:${TAG}"
 
           skopeo copy \
+            --digestfile pushed.digest \
             --dest-creds="${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
             docker-archive:image.tar \
             docker://${IMAGE_REF}
 
-          DIGEST=$(skopeo inspect \
-            --creds="${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}" \
-            docker://${IMAGE_REF} \
-            | jq -r .Digest)
+          DIGEST=$(cat pushed.digest)
 
           echo "${REGISTRY}/${IMAGE_PREFIX}/${IMAGE}@${DIGEST}" > image.digest
+
+      - name: Generate NOTICE and attach license notices
+        env:
+          REGISTRY_USER: ${{ github.actor }}
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          IMAGE_REF=$(cat image.digest)
+          REGISTRY="${IMAGE_REF%%/*}"
+          test -s LICENSE
+
+          printf '%s' "$REGISTRY_TOKEN" | docker login "$REGISTRY" \
+            --username "$REGISTRY_USER" --password-stdin
+          docker pull "$IMAGE_REF"
+          bash scripts/generate-notice.sh "$IMAGE_REF" NOTICE
+          test -s NOTICE
+
+          printf '%s' "$REGISTRY_TOKEN" | oras login "$REGISTRY" \
+            --username "$REGISTRY_USER" --password-stdin
+          oras attach \
+            --artifact-type application/vnd.eoap.license-notices.v1 \
+            --annotation "org.opencontainers.image.title=License and third-party notices" \
+            "$IMAGE_REF" LICENSE:text/plain NOTICE:text/plain

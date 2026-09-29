@@ -124,3 +124,37 @@ skopeo copy --all \
   docker-daemon:my-image:1.0.0 \
   docker://registry.example.org/my-org/my-image:1.0.0
 ```
+
+## Third-party notices
+
+After pushing the image, `.github/workflows/build-image.yaml` pulls the exact
+pushed digest and generates `NOTICE` in a disposable container. It then attaches
+`NOTICE` and the repository's `LICENSE` together as an OCI artifact using ORAS.
+The artifact type is `application/vnd.eoap.license-notices.v1`. Generation runs
+in CI; no local registry access or generated NOTICE commit is needed.
+
+These files are registry attachments associated with the image digest, not files
+inside the image. To find the attachment and download both files with ORAS:
+
+```bash
+oras discover --artifact-type application/vnd.eoap.license-notices.v1 \
+  ghcr.io/terradue/ci-eoap-container@sha256:<image-digest>
+# Use the attachment digest returned above:
+oras pull ghcr.io/terradue/ci-eoap-container@sha256:<attachment-digest>
+```
+
+The workflow needs registry pull/push access through `GITHUB_TOKEN` and declares
+`packages: write`. Include `LICENSE` and `scripts/generate-notice.sh` in the
+repository when committing the workflow changes.
+
+The collector includes installed RPM packages (including the base image), Python
+distributions, and Helm plugin license and attribution files. Known downloaded
+tools are listed even without notice files. Missing notices and embedded or
+unmanaged dependencies are listed for review; collection is best-effort and
+does not guarantee complete attribution coverage.
+
+For optional local use with an image already available in Docker:
+
+```bash
+bash scripts/generate-notice.sh ci-eoap-container:latest ./NOTICE
+```
