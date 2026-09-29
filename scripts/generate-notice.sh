@@ -55,7 +55,12 @@ def collect(paths, owner):
     if not count:
         gaps.append(f'{owner}: no readable installed license/notice text found')
 
-packages = sorted(query('-qa', '--qf', '%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n'))
+# Imported signing keys are rpmdb records, not installed software. Their ARCH
+# is (none), and appending it produces an identifier that rpm -q cannot resolve.
+records = query('-qa', '--qf', '%{NAME}\t%{NAME}-%{VERSION}-%{RELEASE}.%{ARCH}\n')
+packages = sorted(identifier for name, identifier in
+                  (record.split('\t', 1) for record in records)
+                  if name != 'gpg-pubkey')
 if not packages:
     raise SystemExit('No RPM packages found; refusing an empty inventory')
 for package in packages:
