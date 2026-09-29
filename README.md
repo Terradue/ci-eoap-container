@@ -1,3 +1,7 @@
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Terradue/ci-eoap-container/package.yaml?branch=develop&event=push&label=build&logo=githubactions)](https://github.com/Terradue/ci-eoap-container/actions/workflows/package.yaml?query=branch%3Adevelop)
+[![Apache License, Version 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
+
+
 # ci-eoap-container
 
 Container image for CI chains that manage CWL documents as OCI artifacts.
@@ -16,8 +20,15 @@ Provide a single CI runtime with tooling to:
 ## Included tools
 
 - `cwltool`
-- `transpiler-mate`
-- `cwl2puml`
+- `transpiler-mate` and related plugins:
+  - `cwl2codemeta`
+  - `cwl2markdown`
+  - `cwl2oci`
+  - `cwl2ogc`
+  - `cwl2puml`
+  - `cwl2ro-crate`
+  - `cwl2sbom`
+  - `cwl2webgl`
 - `skopeo`
 - `trivy`
 - `oras`
@@ -41,38 +52,72 @@ docker build -t ci-eoap-container:latest .
 cwltool --validate ./workflow.cwl
 ```
 
-### 2) Validate OGC API Processes compatibility
+### 2) Transpile CWL with `transpiler-mate`
+
+The [transpiler-mate](https://github.com/Transpiler-mate/) is a collection of open-source tools built around [CWL](https://www.commonwl.org/) to convert the CWL to other diferent formats.
+
+#### 2.1) Validate OGC API Processes compatibility
 
 ```bash
-transpiler-mate ogcprocesses ./workflow.cwl
+transpiler-mate cwl2ogc ./workflow.cwl#${WORKFLOW_ID} --output ogc-process.json
 ```
 
-### 3) Transpile metadata with transpiler-mate
+#### 2.1) Documentation generation
 
 ```bash
-transpiler-mate markdown ./workflow.cwl --output workflow.md
-transpiler-mate codemeta ./workflow.cwl --output codemeta.json
-transpiler-mate ogcrecord ./workflow.cwl --output ogc-record.json
-transpiler-mate datacite ./workflow.cwl --output datacite.json
+transpiler-mate cwl2markdown ./workflow.cwl --output ./docs
+transpiler-mate cwl2puml \
+  --diagrams component \
+  --output ./docs \
+  --convert-image \
+  --image-format svg \
+  --puml-server uml.planttext.com \
+  'workflow.cwl#${WORKFLOW_ID}'
+transpiler-mate cwl2webgl 'workflow.cwl#${WORKFLOW_ID}' --output ./docs/${WORKFLOW_ID}-explorer.html
 ```
 
-### 4) Publish CWL/metadata as OCI artifacts
+#### 2.2) Metadata generation
+
+```bash
+transpiler-mate cwl2codemeta \
+  --code-repository https://gitlab.com/example/hello.git \
+  --output ./codemeta.json \
+  workflow.cwl
+transpiler-mate cwl2ogcrecords ./workflow.cwl --output ogc-record.json
+transpiler-mate cwl2datacite workflow.cwl --output datacite.json
+transpiler-mate cwl2oci workflow.cwl#${WORKFLOW_ID} \
+  --image-source https://github.com/example/project \
+  --image-revision 4f8c2ad
+```
+
+#### 2.3) Reports generation
+
+```bash
+transpiler-mate cwl2sbom --platform linux/amd64 --output sbom \
+  workflow.cwl
+```
+
+### 3) Publish CWL/metadata as OCI artifacts
 
 ```bash
 oras login registry.example.org -u "$REGISTRY_USER" -p "$REGISTRY_PASSWORD"
 oras push registry.example.org/my-org/my-workflow:1.0.0 \
+  --annotation-file annotations.json \
+  --artifact-type application/cwl \
   ./workflow.cwl:application/cwl \
   ./codemeta.json:application/json \
+  ./datacite.json:application/json \
+  ./ogc-process.json:application/json \
   ./ogc-record.json:application/json
 ```
 
-### 5) Scan OCI/Docker images
+### 4) Scan OCI/Docker images
 
 ```bash
 trivy image registry.example.org/my-org/my-image:1.0.0
 ```
 
-### 6) Push container images
+### 5) Push container images
 
 ```bash
 skopeo copy --all \
