@@ -1,4 +1,4 @@
-[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Terradue/ci-eoap-container/package.yaml?branch=develop&event=push&label=build&logo=githubactions)](https://github.com/Terradue/ci-eoap-container/actions/workflows/package.yaml?query=branch%3Adevelop)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Terradue/ci-eoap-container/build-image.yaml?branch=develop&event=push&label=build&logo=githubactions)](https://github.com/Terradue/ci-eoap-container/actions/workflows/build-image.yaml?query=branch%3Adevelop)
 [![Apache License, Version 2.0](https://img.shields.io/badge/license-Apache%20License%202.0-blue)](https://www.apache.org/licenses/LICENSE-2.0)
 
 
