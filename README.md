@@ -158,3 +158,24 @@ For optional local use with an image already available in Docker:
 ```bash
 bash scripts/generate-notice.sh ci-eoap-container:latest ./NOTICE
 ```
+
+## License review in CI
+
+Before pushing the image, CI runs Trivy's full license scanner against the built
+`image.tar`, covering supported package metadata and recognizable license text.
+The `license-review` GitHub Actions artifact contains `license-report.json` and
+`license-report.txt` (retained for 30 days); the job summary lists entry counts
+by severity. All severities, including UNKNOWN, are retained.
+
+This is **report only**: license findings do not block publication, while scanner
+or report-generation errors fail CI. It uses the same Trivy 0.50.2 version as the
+existing scans and its default license classifications. In those classifications,
+CRITICAL means Forbidden, HIGH Restricted, MEDIUM Reciprocal, LOW Notice,
+Permissive or Unencumbered, and UNKNOWN unrecognized. These are Trivy's labels,
+not an approved project policy or evidence that a license is unlawful.
+
+Review unknown licenses and relevant license obligations before deciding on a
+blocking policy. Detection cannot establish license compatibility, fulfillment
+of source-distribution or attribution obligations, or complete coverage of
+embedded dependencies. Neither a successful scan nor a generated NOTICE is a
+legal clearance. See [Trivy license scanning documentation](https://trivy.dev/v0.50/docs/scanner/license/).

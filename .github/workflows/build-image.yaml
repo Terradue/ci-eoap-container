@@ -118,6 +118,59 @@ jobs:
             --format spdx-json
             --output sbom.spdx.json
 
+      # Report license classifications for review; findings do not block release.
+      # Scanner/runtime errors still fail the job.
+      - name: Scan image licenses (report only)
+        id: license-scan
+        uses: docker://aquasec/trivy:0.50.2
+        with:
+          args: >
+            image
+            --input image.tar
+            --scanners license
+            --license-full
+            --severity UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+            --format json
+            --output license-report.json
+            --exit-code 0
+            --timeout 15m
+            --no-progress
+
+      - name: Format license review report
+        uses: docker://aquasec/trivy:0.50.2
+        with:
+          args: >
+            convert
+            --format table
+            --output license-report.txt
+            license-report.json
+
+      - name: Publish license review summary
+        run: |
+          set -euo pipefail
+          {
+            echo '## License review (report only)'
+            echo 'Download the license-review artifact for the full JSON and text reports.'
+            echo 'Findings do not block publication. Classifications are review signals, not legal conclusions.'
+            echo
+            echo '| Trivy severity | Detected license entries |'
+            echo '| --- | ---: |'
+            jq -r '[.Results[]? | .Licenses[]?] | group_by(.Severity)[] | "| \(.[0].Severity) | \(length) |"' license-report.json
+            echo
+            echo 'An empty report does not establish complete coverage or legal compliance.'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload license review reports
+        if: ${{ always() && steps.license-scan.outcome == 'success' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: license-review
+          path: |
+            license-report.json
+            license-report.txt
+          if-no-files-found: error
+          retention-days: 30
+
       # --------------------------------------------------------
       # Push image and attach license notices
       # --------------------------------------------------------
