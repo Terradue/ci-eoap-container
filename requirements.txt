@@ -4,7 +4,7 @@ transpiler-mate-runtime==1.3.0
 cwl2codemeta==0.1.1
 cwl2markdown==0.2.1
 cwl2oci==0.1.1
-cwl2ogc==0.22.1
+cwl2ogc==0.22.2
 cwl2ogcrecords==0.1.1
 cwl2puml==0.49.1
 cwl2ro-crate==0.1.1
