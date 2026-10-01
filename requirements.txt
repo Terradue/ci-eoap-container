@@ -2,6 +2,7 @@ cwltool==3.2.20260720092025
 transpiler-mate-api==1.0.1
 transpiler-mate-runtime==1.3.0
 cwl2codemeta==0.1.1
+cwl2datacite==0.1.1
 cwl2markdown==0.2.1
 cwl2oci==0.1.1
 cwl2ogc==0.22.2
