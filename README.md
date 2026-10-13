@@ -50,6 +50,7 @@ Provide a single CI runtime with tooling to:
   - `cwl2ro-crate`
   - `cwl2sbom`
   - `cwl2webgl`
+  - `eoap-cwlwrap` (command: `cwlwrap`)
 - `skopeo`
 - `trivy`
 - `oras`
@@ -117,6 +118,23 @@ transpiler-mate cwl2oci workflow.cwl#${WORKFLOW_ID} \
 transpiler-mate cwl2sbom --platform linux/amd64 --output sbom \
   workflow.cwl
 ```
+
+#### 2.4) Wrap a workflow with stage-in and stage-out
+
+The `eoap-cwlwrap` plugin adds data staging to an EO Application Package and
+writes a packed CWL document. For a workflow with `Directory` inputs and outputs,
+provide compatible staging components and set `WORKFLOW_ID` to its entry point:
+
+```bash
+transpiler-mate cwlwrap "./workflow.cwl#${WORKFLOW_ID}" \
+  --directory-stage-in ./stage-in.cwl \
+  --directory-stage-out ./stage-out.cwl \
+  --output ./wrapped.cwl
+cwltool --enable-ext --validate ./wrapped.cwl
+```
+
+See [wrap a workflow](docs/how-to/transform-cwl.md#wrap-a-workflow-with-data-staging)
+for `File` staging options and CLI migration details.
 
 ### 3) Publish CWL/metadata as OCI artifacts
 

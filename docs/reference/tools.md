@@ -22,6 +22,7 @@ The versions below reflect those files; unpinned tools are resolved during build
 | `cwl2ro-crate` | `0.1.1` | RO-Crate metadata |
 | `cwl2sbom` | `0.1.1` | Workflow SBOM reports |
 | `cwl2webgl` | `0.1.1` | HTML workflow explorer |
+| `eoap-cwlwrap` | `0.32.0` | `transpiler-mate cwlwrap`: wrap workflows with stage-in and stage-out and produce packed CWL |
 
 `hatch`, `ruff`, and `pre-commit` are also installed through pip without version pins.
 
