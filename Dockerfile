@@ -1,4 +1,4 @@
-FROM rockylinux/rockylinux:10.1-minimal
+FROM rockylinux/rockylinux:10.2-minimal
 
 # Set up a default user and home directory
 ENV HOME=/home/neo
