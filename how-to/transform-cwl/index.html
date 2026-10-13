@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/ci-eoap-container/how-to/transform-cwl/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Validate and transform CWL - ci-eoap-container</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Validate and transform CWL";
+        var mkdocs_page_input_path = "how-to/transform-cwl.md";
+        var mkdocs_page_url = "/ci-eoap-container/how-to/transform-cwl/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> ci-eoap-container
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-workflow/">Your first CWL validation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../build-and-run/">Build and run the container</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Validate and transform CWL</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#validate-cwl-and-ogc-compatibility">Validate CWL and OGC compatibility</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#wrap-a-workflow-with-data-staging">Wrap a workflow with data staging</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-documentation-and-diagrams">Generate documentation and diagrams</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-metadata">Generate metadata</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-an-sbom-report">Generate an SBOM report</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../publish-artifacts/">Publish a CWL artifact</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scan-and-push/">Scan and push container images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../license-review/">Retrieve notices and review licenses</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../documentation/">Maintain the documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/tools/">Included tools</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/ci/">CI pipeline and artifacts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/cwl-and-oci/">CWL and OCI in the CI runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/license-evidence/">License reports and notices</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">ci-eoap-container</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">How-to guides</li>
+      <li class="breadcrumb-item active">Validate and transform CWL</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/ci-eoap-container/edit/develop/docs/how-to/transform-cwl.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="validate-and-transform-cwl">Validate and transform CWL</h1>
+<p>Run these commands inside the <a href="../build-and-run/#work-with-local-files">CI runtime</a>
+from a directory containing <code>workflow.cwl</code>. For commands that select an entry
+point, set its actual CWL identifier:</p>
+<pre><code class="language-bash">export WORKFLOW_ID=main
+</code></pre>
+<p>Replace <code>main</code> with the entry point in your document. Double quotes around
+<code>"workflow.cwl#${WORKFLOW_ID}"</code> allow the shell to expand the variable.</p>
+<h2 id="validate-cwl-and-ogc-compatibility">Validate CWL and OGC compatibility</h2>
+<pre><code class="language-bash">cwltool --validate ./workflow.cwl
+transpiler-mate cwl2ogc &quot;./workflow.cwl#${WORKFLOW_ID}&quot; --output ogc-process.json
+</code></pre>
+<p>The first command validates CWL. The second checks conversion to an OGC API
+Processes description and writes <code>ogc-process.json</code>.</p>
+<h2 id="wrap-a-workflow-with-data-staging">Wrap a workflow with data staging</h2>
+<p>The <code>eoap-cwlwrap</code> plugin and its <code>transpiler-mate</code> runtime are included in the
+container. The plugin adds stage-in and stage-out steps around the application
+workflow and writes a single packed CWL document.</p>
+<p>For a workflow with <code>Directory</code> inputs and outputs, provide compatible stage-in
+and stage-out CWL components in the working directory:</p>
+<pre><code class="language-bash">transpiler-mate cwlwrap &quot;./workflow.cwl#${WORKFLOW_ID}&quot; \
+  --directory-stage-in ./stage-in.cwl \
+  --directory-stage-out ./stage-out.cwl \
+  --output ./wrapped.cwl
+cwltool --enable-ext --validate ./wrapped.cwl
+</code></pre>
+<p>For <code>File</code> inputs or outputs, supply <code>--file-stage-in ./stage-in-file.cwl</code> or
+<code>--file-stage-out ./stage-out-file.cwl</code>, respectively. Supply a matching staging
+component for each <code>Directory</code> or <code>File</code> type present in the workflow interface;
+omit components for types that are absent. Staging components can also be URLs.</p>
+<p>Since version <code>0.32.0</code>, invoke <code>transpiler-mate cwlwrap</code> instead of the standalone
+<code>eoap-cwlwrap</code> command. Pass the source as a positional argument instead of
+<code>--workflow</code>, select the process with <code>#${WORKFLOW_ID}</code> instead of <code>--workflow-id</code>,
+and use <code>--directory-stage-out</code> instead of <code>--stage-out</code>. See the upstream
+<a href="https://eoepca.github.io/eoap-cwlwrap/reference/cli/">CLI reference</a>
+for all options and the
+<a href="https://eoepca.github.io/eoap-cwlwrap/how-to-guides/build-a-wrapper/">wrapping guide</a>
+for staging examples.</p>
+<h2 id="generate-documentation-and-diagrams">Generate documentation and diagrams</h2>
+<pre><code class="language-bash">mkdir -p generated-docs
+transpiler-mate cwl2markdown ./workflow.cwl --output ./generated-docs
+transpiler-mate cwl2puml \
+  --diagrams component \
+  --output ./generated-docs \
+  --convert-image \
+  --image-format svg \
+  --puml-server uml.planttext.com \
+  &quot;workflow.cwl#${WORKFLOW_ID}&quot;
+transpiler-mate cwl2webgl &quot;workflow.cwl#${WORKFLOW_ID}&quot; \
+  --output &quot;./generated-docs/${WORKFLOW_ID}-explorer.html&quot;
+</code></pre>
+<p>The SVG conversion uses the specified external PlantUML server. These commands
+produce workflow documentation separately from this repository's MkDocs <code>docs/</code>.</p>
+<h2 id="generate-metadata">Generate metadata</h2>
+<p>Replace the example source URL and revision with your workflow repository values:</p>
+<pre><code class="language-bash">transpiler-mate cwl2codemeta \
+  --code-repository https://gitlab.com/example/hello.git \
+  --output ./codemeta.json \
+  workflow.cwl
+transpiler-mate cwl2ogcrecords ./workflow.cwl --output ogc-record.json
+transpiler-mate cwl2datacite workflow.cwl --output datacite.json
+transpiler-mate cwl2oci &quot;workflow.cwl#${WORKFLOW_ID}&quot; \
+  --image-source https://github.com/example/project \
+  --image-revision 4f8c2ad
+</code></pre>
+<h2 id="generate-an-sbom-report">Generate an SBOM report</h2>
+<pre><code class="language-bash">transpiler-mate cwl2sbom --platform linux/amd64 --output sbom workflow.cwl
+</code></pre>
+<p>This report concerns the workflow's container dependencies. The runtime image's
+own SBOM is generated separately by the <a href="../../reference/ci/">build pipeline</a>.</p>
+<p>To distribute the workflow and generated metadata, follow
+<a href="../publish-artifacts/">publish a CWL artifact</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../build-and-run/" class="btn btn-neutral float-left" title="Build and run the container"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../publish-artifacts/" class="btn btn-neutral float-right" title="Publish a CWL artifact">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/ci-eoap-container" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../build-and-run/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../publish-artifacts/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
