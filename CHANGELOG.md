@@ -7,17 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-10-14
+
 ### Added
+
+- eoap-cwlwrap` v0.32.0
 
 ### Changed
 
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
+- `cwl2markdown` bumps to v0.2.3
 
 ## [2.0.0] - 2026-13-13
 
@@ -147,7 +145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `release.yaml` image metadata for `ghcr.io/terradue/ci-eoap-container:1.0.0`.
 - Added README documentation with build and CI usage examples.
 
-[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/Terradue/ci-eoap-container/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.11.0...v2.0.0
 [1.11.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.8.0...v1.10.0
