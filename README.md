@@ -6,6 +6,27 @@
 
 Container image for CI chains that manage CWL documents as OCI artifacts.
 
+## Documentation
+
+The [documentation](docs/index.md) is organized with Diátaxis:
+
+- [Tutorial: your first CWL validation](docs/tutorials/first-workflow.md)
+- [How-to guides](docs/how-to/build-and-run.md) for building, transforming, and publishing
+- [Reference](docs/reference/tools.md) for tools and CI behavior
+- [Explanation](docs/explanation/cwl-and-oci.md) of CWL, OCI, and license evidence
+
+To preview the MkDocs site locally:
+
+```bash
+python3 -m venv .venv-docs
+. .venv-docs/bin/activate
+python -m pip install -r requirements-docs.txt
+mkdocs serve
+```
+
+Run `mkdocs build --strict` to validate and generate the site in `site/`.
+See [maintain the documentation](docs/how-to/documentation.md) for contribution guidance.
+
 ## Goal
 
 Provide a single CI runtime with tooling to:
