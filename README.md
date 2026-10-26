@@ -218,3 +218,13 @@ blocking policy. Detection cannot establish license compatibility, fulfillment
 of source-distribution or attribution obligations, or complete coverage of
 embedded dependencies. Neither a successful scan nor a generated NOTICE is a
 legal clearance. See [Trivy license scanning documentation](https://trivy.dev/v0.50/docs/scanner/license/).
+
+## SBOM and vulnerability monitoring
+
+CI attaches a CycloneDX SBOM to each published image digest and retains it as a
+30-day Actions artifact. Default-branch builds submit supported application
+packages to the dependency graph. Grype scans the attached full SBOM after
+publication, daily for `latest` and `latest-dev`, and on manual request. HIGH or
+CRITICAL findings fail the scan; published images remain available. See
+[image security monitoring](docs/how-to/image-security.md) for setup, coverage,
+permissions, reports, and manual retrieval.

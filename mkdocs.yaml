@@ -39,6 +39,7 @@ nav:
       - Validate and transform CWL: how-to/transform-cwl.md
       - Publish a CWL artifact: how-to/publish-artifacts.md
       - Scan and push container images: how-to/scan-and-push.md
+      - Image security monitoring: how-to/image-security.md
       - Retrieve notices and review licenses: how-to/license-review.md
       - Maintain the documentation: how-to/documentation.md
   - Reference:
