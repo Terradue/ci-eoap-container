@@ -1,0 +1,80 @@
+name: Image vulnerability monitoring
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      image:
+        description: 'Image tag (e.g. 2.1.0) or sha256 digest'
+        required: true
+        type: string
+  schedule:
+    - cron: '23 5 * * *'
+permissions:
+  contents: read
+  packages: read
+  security-events: write
+jobs:
+  targets:
+    runs-on: ubuntu-latest
+    outputs:
+      images: ${{ steps.targets.outputs.images }}
+    steps:
+      - id: targets
+        env:
+          IMAGE: ${{ inputs.image }}
+        run: |
+          if [[ -n "$IMAGE" ]]; then
+            echo "images=$(jq -cn --arg image "$IMAGE" '[$image]')" >> "$GITHUB_OUTPUT"
+          else
+            echo 'images=["latest","latest-dev"]' >> "$GITHUB_OUTPUT"
+          fi
+  scan:
+    needs: targets
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        image: ${{ fromJSON(needs.targets.outputs.images) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oras-project/setup-oras@v1
+        with:
+          version: 1.3.0
+      - uses: anchore/scan-action/download-grype@v6
+        id: grype
+      - name: Retrieve digest-bound SBOM
+        env:
+          IMAGE: ${{ matrix.image }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          REPOSITORY=$(yq -r '.image_registry + "/" + .image_prefix + "/" + .image_name' release.yaml)
+          case "$IMAGE" in
+            sha256:*) REF="$REPOSITORY@$IMAGE" ;;
+            */*) REF="$IMAGE" ;;
+            *) REF="$REPOSITORY:$IMAGE" ;;
+          esac
+          printf '%s' "$GH_TOKEN" | oras login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          python3 scripts/image_sbom.py retrieve "$REF" sbom.cdx.json > image.digest
+      - name: Scan SBOM (HIGH and CRITICAL fail)
+        run: '"${{ steps.grype.outputs.cmd }}" sbom:sbom.cdx.json --fail-on high --output sarif --file grype.sarif'
+      - name: Preserve scan evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vulnerability-scan-${{ strategy.job-index }}
+          path: |
+            sbom.cdx.json
+            grype.sarif
+            image.digest
+          retention-days: 30
+      - name: Upload code scanning results
+        if: ${{ always() && hashFiles('grype.sarif') != '' }}
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: grype.sarif
+          category: image-${{ matrix.image }}

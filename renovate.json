@@ -2,5 +2,65 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:recommended"
+  ],
+  "enabledManagers": [
+    "custom.regex"
+  ],
+  "baseBranchPatterns": [
+    "develop"
+  ],
+  "automerge": false,
+  "dependencyDashboard": true,
+  "labels": [
+    "dependencies"
+  ],
+  "prConcurrentLimit": 4,
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "GitHub release pins with a v prefix",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK)_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s"
+      ],
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "GitHub release pins without a v prefix",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:ORAS|TRIVY)_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s"
+      ],
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Keep CI Trivy image tags synchronized with the runtime pin",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/build-image\\.yaml$/"
+      ],
+      "matchStrings": [
+        "docker://aquasec/trivy:(?<currentValue>\\d+\\.\\d+\\.\\d+)"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "aquasecurity/trivy",
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "aquasecurity/trivy"
+      ],
+      "groupName": "Trivy runtime and CI",
+      "separateMajorMinor": false
+    }
   ]
 }

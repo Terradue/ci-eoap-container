@@ -3,9 +3,14 @@ FROM rockylinux/rockylinux:10.2-minimal
 # Set up a default user and home directory
 ENV HOME=/home/neo
 
+# renovate: datasource=github-releases depName=mikefarah/yq
 ARG YQ_VERSION=v4.44.3
+# renovate: datasource=github-releases depName=oras-project/oras
 ARG ORAS_VERSION=1.2.2
+# renovate: datasource=github-releases depName=go-task/task
 ARG TASK_VERSION=v3.49.1
+# renovate: datasource=github-releases depName=aquasecurity/trivy
+ARG TRIVY_VERSION=0.76.1
 
 COPY requirements.txt /tmp/requirements.txt
 
@@ -15,7 +20,7 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
       -c "Default Neo User" neo
 
 RUN microdnf -y update && \
-    microdnf -y install curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang wget && \
+    microdnf -y install ca-certificates curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang wget && \
     printf '%s\n' \
       '[trivy]' \
       'name=Trivy repository' \
@@ -24,8 +29,13 @@ RUN microdnf -y update && \
       'enabled=1' \
       'gpgkey=https://aquasecurity.github.io/trivy-repo/rpm/public.key' \
       > /etc/yum.repos.d/trivy.repo && \
-    microdnf -y install trivy && \
-    pip3 install --no-cache-dir -r /tmp/requirements.txt hatch ruff pre-commit && \
+    microdnf -y install "trivy-${TRIVY_VERSION}" && \
+    # Bootstrap fixed pip before contacting the package index. The advisory's
+    # wheel hash prevents an old pip CA bundle from trusting substituted content.
+    # Keep this URL/hash in sync with the pip pin in requirements.txt.
+    python3 -m pip --disable-pip-version-check install --no-cache-dir --no-deps --ignore-installed \
+      "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" && \
+    python3 -m pip install --no-cache-dir -r /tmp/requirements.txt && \
     curl -fL "https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64" \
       -o /usr/local/bin/yq && \
     chmod +x /usr/local/bin/yq && \
