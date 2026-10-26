@@ -40,11 +40,11 @@ jobs:
       matrix:
         image: ${{ fromJSON(needs.targets.outputs.images) }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: oras-project/setup-oras@v1
+      - uses: actions/checkout@v7
+      - uses: oras-project/setup-oras@v2
         with:
           version: 1.3.0
-      - uses: anchore/scan-action/download-grype@v6
+      - uses: anchore/scan-action/download-grype@v7
         id: grype
       - name: Retrieve digest-bound SBOM
         env:
@@ -64,7 +64,7 @@ jobs:
         run: '"${{ steps.grype.outputs.cmd }}" sbom:sbom.cdx.json --fail-on high --output sarif --file grype.sarif'
       - name: Preserve scan evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: vulnerability-scan-${{ strategy.job-index }}
           path: |
@@ -74,7 +74,7 @@ jobs:
           retention-days: 30
       - name: Upload code scanning results
         if: ${{ always() && hashFiles('grype.sarif') != '' }}
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: grype.sarif
           category: image-${{ matrix.image }}
