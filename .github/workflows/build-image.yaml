@@ -96,7 +96,7 @@ jobs:
       # Trivy scan (relaxed for now)
       # --------------------------------------------------------
       - name: Trivy scan (debug mode)
-        uses: docker://aquasec/trivy:0.50.2
+        uses: docker://aquasec/trivy:0.76.1
         env:
           TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db
         with:
@@ -108,7 +108,7 @@ jobs:
             --no-progress
 
       - name: Generate SBOM (SPDX JSON)
-        uses: docker://aquasec/trivy:0.50.2
+        uses: docker://aquasec/trivy:0.76.1
         env:
           TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db
         with:
@@ -122,7 +122,7 @@ jobs:
       # Scanner/runtime errors still fail the job.
       - name: Scan image licenses (report only)
         id: license-scan
-        uses: docker://aquasec/trivy:0.50.2
+        uses: docker://aquasec/trivy:0.76.1
         with:
           args: >
             image
@@ -137,7 +137,7 @@ jobs:
             --no-progress
 
       - name: Format license review report
-        uses: docker://aquasec/trivy:0.50.2
+        uses: docker://aquasec/trivy:0.76.1
         with:
           args: >
             convert
