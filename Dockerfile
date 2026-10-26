@@ -11,6 +11,8 @@ ARG ORAS_VERSION=1.2.2
 ARG TASK_VERSION=v3.49.1
 # renovate: datasource=github-releases depName=aquasecurity/trivy
 ARG TRIVY_VERSION=0.76.1
+# renovate: datasource=github-releases depName=nodejs/node
+ARG NODE_VERSION=v24.22.1
 
 COPY requirements.txt /tmp/requirements.txt
 
@@ -20,7 +22,7 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
       -c "Default Neo User" neo
 
 RUN microdnf -y update && \
-    microdnf -y install ca-certificates curl tar gzip python3 python3-pip python3-setuptools nodejs gcc skopeo jq git clang wget && \
+    microdnf -y install ca-certificates curl tar gzip python3 python3-pip python3-setuptools libstdc++ libatomic openssl gcc skopeo jq git clang wget && \
     printf '%s\n' \
       '[trivy]' \
       'name=Trivy repository' \
@@ -50,6 +52,16 @@ RUN microdnf -y update && \
     install -m 0755 /tmp/task /usr/local/bin/task && \
     rm -rf /tmp/task /tmp/task.tar.gz && \
     microdnf clean all
+
+# Install the selected upstream Node.js release (including its bundled npm).
+# This image's downloaded tools target Linux amd64.
+RUN cd /tmp && \
+    curl -fLO "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-linux-x64.tar.gz" && \
+    curl -fLo node-SHASUMS256.txt "https://nodejs.org/dist/${NODE_VERSION}/SHASUMS256.txt" && \
+    grep "  node-${NODE_VERSION}-linux-x64.tar.gz$" node-SHASUMS256.txt | sha256sum --check - && \
+    tar -xzf "node-${NODE_VERSION}-linux-x64.tar.gz" -C /usr/local --strip-components=1 && \
+    rm "node-${NODE_VERSION}-linux-x64.tar.gz" node-SHASUMS256.txt && \
+    test "$(node --version)" = "${NODE_VERSION}" && npm --version
 
 RUN curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
