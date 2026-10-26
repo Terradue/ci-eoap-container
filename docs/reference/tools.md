@@ -26,6 +26,7 @@ The versions below reflect those files; unpinned tools are resolved during build
 | `hatch` | `1.18.1` | Python project and environment management |
 | `ruff` | `0.17.2` | Python linting and formatting |
 | `pre-commit` | `4.7.0` | Git hook management |
+| `uv` | `0.13.5` | Python package management; explicit pin for the certificate incident fix |
 
 All directly installed pip packages are pinned in `requirements.txt`, including
 these development tools, so Dependabot can propose updates. Transitive Python
