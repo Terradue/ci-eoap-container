@@ -26,6 +26,8 @@ The versions below reflect those files; unpinned tools are resolved during build
 | `hatch` | `1.18.1` | Python project and environment management |
 | `ruff` | `0.17.2` | Python linting and formatting |
 | `pre-commit` | `4.7.0` | Git hook management |
+| `pip` | `26.2.2` | Hash-verified bootstrap before index access |
+| `certifi` | `2026.10.19` | Updated Python CA bundle |
 | `uv` | `0.13.5` | Python package management; explicit pin for the certificate incident fix |
 
 All directly installed pip packages are pinned in `requirements.txt`, including
@@ -46,7 +48,7 @@ dependencies are still resolved during the build; this is not a full lockfile.
 | `helm-unittest` | Downloaded binary, `1.0.3` |
 | Helm `cm-push` plugin | Installed from ChartMuseum repository, unpinned |
 
-The RPM installation also includes curl, tar, gzip, pip, setuptools, GCC, Git,
+The RPM installation also includes ca-certificates, curl, tar, gzip, pip, setuptools, GCC, Git,
 Clang, and wget. Downloads for yq, ORAS, Task, and helm-unittest target Linux amd64.
 
 ## Runtime defaults

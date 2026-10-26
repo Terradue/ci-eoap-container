@@ -92,6 +92,7 @@ jobs:
             --context .
             --dockerfile Dockerfile
             --no-push
+            --cache=false
             --tar-path image.tar
 
       - name: Generate SBOM (CycloneDX JSON)

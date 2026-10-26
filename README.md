@@ -63,7 +63,7 @@ Provide a single CI runtime with tooling to:
 ## Build
 
 ```bash
-docker build -t ci-eoap-container:latest .
+docker build --pull --no-cache -t ci-eoap-container:latest .
 ```
 
 ## Typical CI usage
