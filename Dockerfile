@@ -6,6 +6,7 @@ ENV HOME=/home/neo
 ARG YQ_VERSION=v4.44.3
 ARG ORAS_VERSION=1.2.2
 ARG TASK_VERSION=v3.49.1
+ARG TRIVY_VERSION=0.76.1
 
 COPY requirements.txt /tmp/requirements.txt
 
@@ -24,7 +25,7 @@ RUN microdnf -y update && \
       'enabled=1' \
       'gpgkey=https://aquasecurity.github.io/trivy-repo/rpm/public.key' \
       > /etc/yum.repos.d/trivy.repo && \
-    microdnf -y install trivy && \
+    microdnf -y install "trivy-${TRIVY_VERSION}" && \
     # Bootstrap fixed pip before contacting the package index. The advisory's
     # wheel hash prevents an old pip CA bundle from trusting substituted content.
     # Keep this URL/hash in sync with the pip pin in requirements.txt.

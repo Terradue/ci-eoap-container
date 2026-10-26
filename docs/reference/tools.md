@@ -43,7 +43,7 @@ dependencies are still resolved during the build; this is not a full lockfile.
 | `oras` | `ORAS_VERSION=1.2.2` build argument |
 | `task` | `TASK_VERSION=v3.49.1` build argument |
 | `skopeo`, `jq`, `nodejs`, `python3` | RPM repositories, unpinned |
-| `trivy` | Trivy RPM repository, unpinned |
+| `trivy` | `TRIVY_VERSION=0.76.1` build argument, signed RPM repository |
 | Helm | Upstream Helm 3 installation script, unpinned |
 | `helm-unittest` | Downloaded binary, `1.0.3` |
 | Helm `cm-push` plugin | Installed from ChartMuseum repository, unpinned |
@@ -57,5 +57,6 @@ The Dockerfile creates user `neo` with UID/GID `2000` and sets `HOME=/home/neo`.
 It does not set a `USER` instruction, so Docker runs commands as root by default.
 Use `--user` to override this when writing files into a host-mounted directory.
 
-The Trivy version installed in the runtime is distinct from the `0.50.2` scanner
-image selected by the [CI pipeline](ci.md).
+The runtime and [CI pipeline](ci.md) both pin Trivy to `0.76.1`. When upgrading,
+update the Dockerfile build argument and all Trivy image references in the build
+workflow together, then validate CycloneDX generation and license reporting.

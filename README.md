@@ -207,7 +207,7 @@ The `license-review` GitHub Actions artifact contains `license-report.json` and
 by severity. All severities, including UNKNOWN, are retained.
 
 This is **report only**: license findings do not block publication, while scanner
-or report-generation errors fail CI. It uses the same Trivy 0.50.2 version as the
+or report-generation errors fail CI. It uses the same Trivy 0.76.1 version as the
 existing scans and its default license classifications. In those classifications,
 CRITICAL means Forbidden, HIGH Restricted, MEDIUM Reciprocal, LOW Notice,
 Permissive or Unencumbered, and UNKNOWN unrecognized. These are Trivy's labels,

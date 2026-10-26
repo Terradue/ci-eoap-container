@@ -19,7 +19,7 @@ The image build is defined in
 
 1. Resolve the image tag and validate release tags against `release.yaml`.
 2. Build `image.tar` with Kaniko without pushing.
-3. Generate a CycloneDX JSON SBOM with Trivy `0.50.2` and retain it for 30 days.
+3. Generate a CycloneDX JSON SBOM with Trivy `0.76.1` and retain it for 30 days.
 4. Preserve the full application and OS inventory for downstream security jobs.
 5. Scan licenses, format the report, and upload the review artifact.
 6. Push the archive with Skopeo and record its digest.
