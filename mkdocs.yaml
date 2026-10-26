@@ -41,6 +41,7 @@ nav:
       - Scan and push container images: how-to/scan-and-push.md
       - Image security monitoring: how-to/image-security.md
       - Retrieve notices and review licenses: how-to/license-review.md
+      - Hosted dependency updates: how-to/dependency-updates.md
       - Maintain the documentation: how-to/documentation.md
   - Reference:
       - Included tools: reference/tools.md

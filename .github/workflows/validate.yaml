@@ -20,6 +20,11 @@ jobs:
         with:
           go-version: '1.24'
           cache: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate Renovate configuration
+        run: npx --yes --package renovate@44.182.2 renovate-config-validator --strict renovate.json
       - name: Install validators
         run: |
           python -m pip install -r requirements-docs.txt
