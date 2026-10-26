@@ -20,7 +20,7 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK)_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s"
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK|NODE)_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s"
       ],
       "versioningTemplate": "semver"
     },
@@ -58,6 +58,12 @@
       ],
       "groupName": "Trivy runtime and CI",
       "separateMajorMinor": false
+    },
+    {
+      "matchPackageNames": [
+        "nodejs/node"
+      ],
+      "allowedVersions": "/^v?24\\./"
     }
   ]
 }

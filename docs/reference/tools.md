@@ -42,14 +42,15 @@ dependencies are still resolved during the build; this is not a full lockfile.
 | `yq` | `YQ_VERSION=v4.44.3` build argument |
 | `oras` | `ORAS_VERSION=1.2.2` build argument |
 | `task` | `TASK_VERSION=v3.49.1` build argument |
-| `skopeo`, `jq`, `nodejs`, `python3` | RPM repositories, unpinned |
+| `skopeo`, `jq`, `python3` | RPM repositories, unpinned |
+| `nodejs`, bundled `npm` | `NODE_VERSION=v24.22.1`; upstream Linux x64 archive checked against release SHA256 sums |
 | `trivy` | `TRIVY_VERSION=0.76.1` build argument, signed RPM repository |
 | Helm | Upstream Helm 3 installation script, unpinned |
 | `helm-unittest` | Downloaded binary, `1.0.3` |
 | Helm `cm-push` plugin | Installed from ChartMuseum repository, unpinned |
 
 The RPM installation also includes ca-certificates, curl, tar, gzip, pip, setuptools, GCC, Git,
-Clang, and wget. Downloads for yq, ORAS, Task, and helm-unittest target Linux amd64.
+Clang, OpenSSL, the Node.js runtime libraries, and wget. Downloads for yq, ORAS, Task, and helm-unittest target Linux amd64.
 
 ## Runtime defaults
 
