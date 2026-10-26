@@ -63,7 +63,7 @@ Provide a single CI runtime with tooling to:
 ## Build
 
 ```bash
-docker build -t ci-eoap-container:latest .
+docker build --pull --no-cache -t ci-eoap-container:latest .
 ```
 
 ## Typical CI usage
@@ -207,7 +207,7 @@ The `license-review` GitHub Actions artifact contains `license-report.json` and
 by severity. All severities, including UNKNOWN, are retained.
 
 This is **report only**: license findings do not block publication, while scanner
-or report-generation errors fail CI. It uses the same Trivy 0.50.2 version as the
+or report-generation errors fail CI. It uses the same Trivy 0.76.1 version as the
 existing scans and its default license classifications. In those classifications,
 CRITICAL means Forbidden, HIGH Restricted, MEDIUM Reciprocal, LOW Notice,
 Permissive or Unencumbered, and UNKNOWN unrecognized. These are Trivy's labels,
@@ -218,3 +218,13 @@ blocking policy. Detection cannot establish license compatibility, fulfillment
 of source-distribution or attribution obligations, or complete coverage of
 embedded dependencies. Neither a successful scan nor a generated NOTICE is a
 legal clearance. See [Trivy license scanning documentation](https://trivy.dev/v0.50/docs/scanner/license/).
+
+## SBOM and vulnerability monitoring
+
+CI attaches a CycloneDX SBOM to each published image digest and retains it as a
+30-day Actions artifact. Default-branch builds submit supported application
+packages to the dependency graph. Grype scans the attached full SBOM after
+publication, daily for `latest` and `latest-dev`, and on manual request. HIGH or
+CRITICAL findings fail the scan; published images remain available. See
+[image security monitoring](docs/how-to/image-security.md) for setup, coverage,
+permissions, reports, and manual retrieval.

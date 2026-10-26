@@ -12,3 +12,12 @@ cwl2ro-crate==0.1.1
 cwl2sbom==0.1.1
 cwl2webgl==0.1.1
 eoap-cwlwrap==0.32.0
+hatch==1.18.1
+ruff==0.17.2
+pre-commit==4.7.0
+# Certificate incident mitigation: uv >=0.13.4 is required.
+# https://discuss.python.org/t/109576
+uv==0.13.5
+# Fixed CA bundles: keep pip's Dockerfile bootstrap URL/hash in sync.
+pip==26.2.2
+certifi==2026.10.19
