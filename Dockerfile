@@ -8,7 +8,7 @@ ARG YQ_VERSION=v4.44.3
 # renovate: datasource=github-releases depName=oras-project/oras
 ARG ORAS_VERSION=1.2.2
 # renovate: datasource=github-releases depName=go-task/task
-ARG TASK_VERSION=v3.49.1
+ARG TASK_VERSION=v3.54.0
 # renovate: datasource=github-releases depName=aquasecurity/trivy
 ARG TRIVY_VERSION=0.76.1
 # renovate: datasource=github-releases depName=nodejs/node
