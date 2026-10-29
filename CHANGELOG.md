@@ -7,17 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-10-29
+
+### Added
+
+- Attach CycloneDX SBOM and license notice artifacts to published image digests.
+- Monitor published image vulnerabilities and submit supported package inventory to GitHub's dependency graph.
+- Publish a Trivy license review report for each image build.
+- Configure hosted Renovate updates for pinned tool releases.
+
+### Changed
+
+- Pin Node.js 24 and update image tooling and Python dependencies.
+- Build Helm, helm-unittest, the ChartMuseum plugin, yq, Task, ORAS, and Trivy from source with patched Go dependencies.
+- Remove Go toolchains and build caches from the final image.
+
+### Fixed
+
+- Resolve high and critical image findings identified by Trivy, including issues in npm, Python packages, and bundled Go tools.
+- Build helm-unittest from source to avoid relying on a missing release archive executable.
+
 ## [2.1.0] - 2026-10-14
 
 ### Added
 
-- eoap-cwlwrap` v0.32.0
+- Add the `eoap-cwlwrap` v0.32.0 plugin.
 
 ### Changed
 
 - `cwl2markdown` bumps to v0.2.3
 
-## [2.0.0] - 2026-13-13
+## [2.0.0] - 2026-10-13
 
 ### Changed
 
@@ -145,7 +165,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `release.yaml` image metadata for `ghcr.io/terradue/ci-eoap-container:1.0.0`.
 - Added README documentation with build and CI usage examples.
 
-[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/Terradue/ci-eoap-container/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/Terradue/ci-eoap-container/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.11.0...v2.0.0
 [1.11.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.10.0...v1.11.0
