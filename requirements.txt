@@ -17,7 +17,13 @@ ruff==0.17.2
 pre-commit==4.7.0
 # Certificate incident mitigation: uv >=0.13.4 is required.
 # https://discuss.python.org/t/109576
-uv==0.13.5
+uv==0.13.6
 # Fixed CA bundles: keep pip's Dockerfile bootstrap URL/hash in sync.
 pip==26.2.2
 certifi==2026.10.23
+# Security fixes identified by the image scan.
+msgpack==1.2.3
+setuptools==84.2.1
+urllib3==2.8.0
+jaraco.context==6.1.2
+wheel==0.46.2
