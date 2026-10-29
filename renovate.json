@@ -23,7 +23,7 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK|NODE)_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s"
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK|NODE|HELM|HELM_UNITTEST|HELM_PUSH)_VERSION=(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\\s"
       ],
       "versioningTemplate": "semver"
     },
@@ -37,6 +37,17 @@
         "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:ORAS|TRIVY)_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s"
       ],
       "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "npm CLI pin",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=npm depName=(?<depName>[^\\s]+)\\s+ARG (?:NPM|UNDICI|IP_ADDRESS)_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s"
+      ],
       "versioningTemplate": "semver"
     },
     {
