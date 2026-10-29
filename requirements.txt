@@ -20,4 +20,4 @@ pre-commit==4.7.0
 uv==0.13.5
 # Fixed CA bundles: keep pip's Dockerfile bootstrap URL/hash in sync.
 pip==26.2.2
-certifi==2026.10.19
+certifi==2026.10.23
