@@ -6,7 +6,7 @@ ENV HOME=/home/neo
 # renovate: datasource=github-releases depName=mikefarah/yq
 ARG YQ_VERSION=v4.54.1
 # renovate: datasource=github-releases depName=oras-project/oras
-ARG ORAS_VERSION=1.2.2
+ARG ORAS_VERSION=1.3.6
 # renovate: datasource=github-releases depName=go-task/task
 ARG TASK_VERSION=v3.54.0
 # renovate: datasource=github-releases depName=aquasecurity/trivy
