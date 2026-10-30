@@ -33,6 +33,9 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
     /usr/sbin/useradd -u 2000 -r -g 2000 -m -d ${HOME} -s /sbin/nologin \
       -c "Default Neo User" neo
 
+# bagit 1.9.0 is distributed as an sdist and needs setuptools-scm to determine
+# its version. Preinstall its pinned build tools and disable pip build isolation,
+# which fails under Kaniko.
 RUN microdnf -y update && \
     microdnf -y install ca-certificates curl tar gzip python3 python3-pip python3-setuptools libstdc++ libatomic openssl gcc skopeo jq git clang wget && \
     printf '%s\n' \
@@ -49,7 +52,10 @@ RUN microdnf -y update && \
     # Keep this URL/hash in sync with the pip pin in requirements.txt.
     python3 -m pip --disable-pip-version-check install --no-cache-dir --no-deps --ignore-installed \
       "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" && \
-    python3 -m pip install --no-cache-dir --ignore-installed -r /tmp/requirements.txt && \
+    python3 -m pip install --no-cache-dir --ignore-installed \
+      setuptools==84.2.1 setuptools-scm==10.3.4 wheel==0.46.2 && \
+    python3 -m pip install --no-cache-dir --ignore-installed --no-build-isolation \
+      -r /tmp/requirements.txt && \
     microdnf clean all && \
     cp -a /usr/local/lib64/python3.12/site-packages/msgpack/. \
       /usr/local/lib/python3.12/site-packages/pip/_vendor/msgpack/ && \
