@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Resolve high and critical image findings identified by Trivy, including issues in npm, Python packages, and bundled Go tools.
 - Build helm-unittest from source to avoid relying on a missing release archive executable.
+- Use a Grype version that can read the CycloneDX 1.7 SBOMs produced by Trivy.
 
 ## [2.1.0] - 2026-10-14
 
