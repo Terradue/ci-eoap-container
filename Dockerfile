@@ -108,6 +108,24 @@ def update_refs(value):
 update_refs(document)
 sbom.write_text(json.dumps(document, separators=(",", ":")) + "\n")
 
+# Trivy reads pip's vendor.txt as its inventory for vendored packages. Keep
+# that inventory aligned with the replacements above so it does not report
+# stale vendored versions alongside the patched libraries.
+vendor_file = Path("/usr/local/lib/python3.12/site-packages/pip/_vendor/vendor.txt")
+vendor = vendor_file.read_text()
+for old, new in {
+    "msgpack==1.1.2": "msgpack==1.2.3",
+    "urllib3==2.7.0": "urllib3==2.8.0",
+    "setuptools==70.3.0": "pip-vendored-pkg_resources==70.3.0",
+}.items():
+    entries = vendor.splitlines()
+    if any(entry.strip() == new for entry in entries):
+        continue
+    if not any(entry.strip() == old for entry in entries):
+        raise RuntimeError(f"Expected pip vendor entry not found: {old}")
+    vendor = vendor.replace(old, new, 1)
+vendor_file.write_text(vendor)
+
 import pip._vendor.msgpack as vendored_msgpack
 import pip._vendor.urllib3 as vendored_urllib3
 assert vendored_msgpack.__version__ == "1.2.3"
