@@ -23,8 +23,9 @@
         "/^Dockerfile$/"
       ],
       "matchStrings": [
-        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK)_VERSION=(?<currentValue>v\\d+\\.\\d+\\.\\d+)\\s"
+        "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:YQ|TASK|NODE|HELM|HELM_UNITTEST|HELM_PUSH)_VERSION=(?<currentValue>v?\\d+\\.\\d+\\.\\d+)\\s"
       ],
+      "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
     },
     {
@@ -36,7 +37,20 @@
       "matchStrings": [
         "# renovate: datasource=(?<datasource>github-releases) depName=(?<depName>[^\\s]+)\\s+ARG (?:ORAS|TRIVY)_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s"
       ],
+      "datasourceTemplate": "github-releases",
       "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "npm CLI pin",
+      "managerFilePatterns": [
+        "/^Dockerfile$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=npm depName=(?<depName>[^\\s]+)\\s+ARG (?:NPM|UNDICI|IP_ADDRESS)_VERSION=(?<currentValue>\\d+\\.\\d+\\.\\d+)\\s"
+      ],
+      "datasourceTemplate": "npm",
       "versioningTemplate": "semver"
     },
     {
@@ -52,6 +66,20 @@
       "depNameTemplate": "aquasecurity/trivy",
       "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
       "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "description": "Keep the vulnerability monitor Grype pin current",
+      "managerFilePatterns": [
+        "/^\\.github/workflows/scan-image\\.yaml$/"
+      ],
+      "matchStrings": [
+        "grype-version: (?<currentValue>v?\\d+\\.\\d+\\.\\d+)\\s"
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "anchore/grype",
+      "extractVersionTemplate": "^v?(?<version>\\d+\\.\\d+\\.\\d+)$",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
@@ -61,6 +89,12 @@
       ],
       "groupName": "Trivy runtime and CI",
       "separateMajorMinor": false
+    },
+    {
+      "matchPackageNames": [
+        "nodejs/node"
+      ],
+      "allowedVersions": "/^v?24\\./"
     }
   ]
 }

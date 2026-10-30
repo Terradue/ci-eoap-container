@@ -27,8 +27,8 @@ The versions below reflect those files; unpinned tools are resolved during build
 | `ruff` | `0.17.2` | Python linting and formatting |
 | `pre-commit` | `4.7.0` | Git hook management |
 | `pip` | `26.2.2` | Hash-verified bootstrap before index access |
-| `certifi` | `2026.10.19` | Updated Python CA bundle |
-| `uv` | `0.13.5` | Python package management; explicit pin for the certificate incident fix |
+| `certifi` | `2026.10.23` | Updated Python CA bundle |
+| `uv` | `0.13.6` | Python package management; explicit pin for the certificate incident fix |
 
 All directly installed pip packages are pinned in `requirements.txt`, including
 these development tools, so Dependabot can propose updates. Transitive Python
@@ -38,18 +38,19 @@ dependencies are still resolved during the build; this is not a full lockfile.
 
 | Tool or component | Build selection |
 | --- | --- |
-| Base image | `rockylinux/rockylinux:10.1-minimal` |
-| `yq` | `YQ_VERSION=v4.44.3` build argument |
-| `oras` | `ORAS_VERSION=1.2.2` build argument |
-| `task` | `TASK_VERSION=v3.49.1` build argument |
-| `skopeo`, `jq`, `nodejs`, `python3` | RPM repositories, unpinned |
-| `trivy` | `TRIVY_VERSION=0.76.1` build argument, signed RPM repository |
-| Helm | Upstream Helm 3 installation script, unpinned |
-| `helm-unittest` | Downloaded binary, `1.0.3` |
-| Helm `cm-push` plugin | Installed from ChartMuseum repository, unpinned |
+| Base image | `rockylinux/rockylinux:10.2-minimal` |
+| `yq` | `YQ_VERSION=v4.54.1`; built from source with Go `1.27.3` and patched `x/net` |
+| `oras` | `ORAS_VERSION=1.3.6`; built from source with Go `1.27.3` |
+| `task` | `TASK_VERSION=v3.54.0`; built from source with Go `1.27.3` and patched Go modules |
+| `skopeo`, `jq`, `python3` | RPM repositories, unpinned |
+| `nodejs`, bundled `npm` | `NODE_VERSION=v24.22.1`; upstream Linux x64 archive checked against release SHA256 sums, then npm updated to `12.2.1` with patched `undici` and `ip-address` dependencies |
+| `trivy` | `TRIVY_VERSION=0.76.1`; RPM installed, then rebuilt from source with patched Go dependencies |
+| Helm | `HELM_VERSION=v3.22.0`; built from source with Go `1.27.3` and patched Go dependencies |
+| `helm-unittest` | `v1.2.1`, built from source with Go `1.27.3` and patched Go modules |
+| Helm `cm-push` plugin | ChartMuseum `v0.11.1`, rebuilt with Go `1.27.3` and updated Go module dependencies |
 
 The RPM installation also includes ca-certificates, curl, tar, gzip, pip, setuptools, GCC, Git,
-Clang, and wget. Downloads for yq, ORAS, Task, and helm-unittest target Linux amd64.
+Clang, OpenSSL, the Node.js runtime libraries, and wget. Go source builds target Linux amd64.
 
 ## Runtime defaults
 

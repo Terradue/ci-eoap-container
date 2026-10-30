@@ -46,6 +46,8 @@ jobs:
           version: 1.3.0
       - uses: anchore/scan-action/download-grype@v7
         id: grype
+        with:
+          grype-version: v0.117.0
       - name: Retrieve digest-bound SBOM
         env:
           IMAGE: ${{ matrix.image }}
