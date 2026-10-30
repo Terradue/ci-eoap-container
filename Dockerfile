@@ -33,9 +33,8 @@ RUN /usr/sbin/groupadd -g 2000 neo && \
     /usr/sbin/useradd -u 2000 -r -g 2000 -m -d ${HOME} -s /sbin/nologin \
       -c "Default Neo User" neo
 
-# bagit 1.9.0 is distributed as an sdist and needs setuptools-scm to determine
-# its version. Preinstall its pinned build tools and disable pip build isolation,
-# which fails under Kaniko.
+# Build bagit 1.9.0's verified source archive into a wheel first. Pip's PEP 517
+# metadata subprocess fails under Kaniko, so install the resulting local wheel.
 RUN microdnf -y update && \
     microdnf -y install ca-certificates curl tar gzip python3 python3-pip python3-setuptools libstdc++ libatomic openssl gcc skopeo jq git clang wget && \
     printf '%s\n' \
@@ -50,12 +49,22 @@ RUN microdnf -y update && \
     # Bootstrap fixed pip before contacting the package index. The advisory's
     # wheel hash prevents an old pip CA bundle from trusting substituted content.
     # Keep this URL/hash in sync with the pip pin in requirements.txt.
-    python3 -m pip --disable-pip-version-check install --no-cache-dir --no-deps --ignore-installed \
+    python3 -m pip --disable-pip-version-check install --prefix=/usr/local --no-cache-dir --no-deps --ignore-installed \
       "pip @ https://files.pythonhosted.org/packages/3f/06/3e4420302363fbb71be3c7f35ce042f54bfca330e3e66b3a2e3c4cca579f/pip-26.2.2-py3-none-any.whl#sha256=fd7f4dfa8190e014013b9f08f3e973f4e4c26ffd179a204895533a7254813a70" && \
-    python3 -m pip install --no-cache-dir --ignore-installed \
+    python3 -m pip install --prefix=/usr/local --no-cache-dir --ignore-installed \
       setuptools==84.2.1 setuptools-scm==10.3.4 wheel==0.46.2 && \
-    python3 -m pip install --no-cache-dir --ignore-installed --no-build-isolation \
+    mkdir -p /tmp/bagit-wheelhouse && \
+    curl -fL https://files.pythonhosted.org/packages/a1/a0/8866b4c6f894af0eb10e4964157f3241dd4117700fc010e7825471d51a13/bagit-1.9.0.tar.gz \
+      -o /tmp/bagit-1.9.0.tar.gz && \
+    echo '9455006c2d1df88be95ec1fccabc5ea623389589ea4c85b3d85bd256f29d7656  /tmp/bagit-1.9.0.tar.gz' | sha256sum --check - && \
+    tar -xzf /tmp/bagit-1.9.0.tar.gz -C /tmp && \
+    cd /tmp/bagit-1.9.0 && \
+    SETUPTOOLS_SCM_PRETEND_VERSION=1.9.0 python3 setup.py bdist_wheel --dist-dir /tmp/bagit-wheelhouse && \
+    cd / && \
+    python3 -m pip install --prefix=/usr/local --no-cache-dir --ignore-installed \
+      --find-links=/tmp/bagit-wheelhouse --only-binary=bagit \
       -r /tmp/requirements.txt && \
+    rm -rf /tmp/bagit-wheelhouse /tmp/bagit-1.9.0 /tmp/bagit-1.9.0.tar.gz && \
     microdnf clean all && \
     cp -a /usr/local/lib64/python3.12/site-packages/msgpack/. \
       /usr/local/lib/python3.12/site-packages/pip/_vendor/msgpack/ && \
@@ -105,6 +114,9 @@ assert vendored_msgpack.__version__ == "1.2.3"
 assert vendored_urllib3.__version__ == "2.8.0"
 PY
 
+# Make tools installed under /usr/local available during the remaining build steps.
+ENV PATH="/usr/bin:/usr/local/bin:/bin:${PATH}"
+
 # Install the selected upstream Node.js release (including its bundled npm).
 # This image's downloaded tools target Linux amd64.
 RUN cd /tmp && \
@@ -128,8 +140,6 @@ RUN cd /tmp && \
     mv /tmp/npm-ip-address/package /usr/local/lib/node_modules/npm/node_modules/ip-address && \
     rm -rf /tmp/npm-ip-address && npm cache clean --force && npm --version && \
     test "$(node -p 'require("/usr/local/lib/node_modules/npm/node_modules/ip-address/package.json").version')" = "${IP_ADDRESS_VERSION}"
-
-ENV PATH="/usr/bin:/usr/local/bin:/bin:${PATH}"
 
 RUN cd /tmp && \
     curl -fLO https://go.dev/dl/go1.27.3.linux-amd64.tar.gz && \
