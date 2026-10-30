@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/ci-eoap-container/tutorials/first-workflow/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Your first CWL validation - ci-eoap-container</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Your first CWL validation";
+        var mkdocs_page_input_path = "tutorials/first-workflow.md";
+        var mkdocs_page_url = "/ci-eoap-container/tutorials/first-workflow/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> ci-eoap-container
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Your first CWL validation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#before-you-start">Before you start</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#build-the-runtime">Build the runtime</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create-a-cwl-document">Create a CWL document</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#validate-the-document">Validate the document</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-documentation">Generate documentation</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/build-and-run/">Build and run the container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/transform-cwl/">Validate and transform CWL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/publish-artifacts/">Publish a CWL artifact</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/scan-and-push/">Scan and push container images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/image-security/">Image security monitoring</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/license-review/">Retrieve notices and review licenses</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/dependency-updates/">Hosted dependency updates</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../how-to/documentation/">Maintain the documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/tools/">Included tools</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/ci/">CI pipeline and artifacts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/cwl-and-oci/">CWL and OCI in the CI runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/license-evidence/">License reports and notices</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">ci-eoap-container</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">Tutorials</li>
+      <li class="breadcrumb-item active">Your first CWL validation</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/ci-eoap-container/edit/develop/docs/tutorials/first-workflow.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="your-first-cwl-validation">Your first CWL validation</h1>
+<p>In this tutorial you will build the CI image, create a small CWL document, and
+validate it inside the container. No registry account is needed.</p>
+<h2 id="before-you-start">Before you start</h2>
+<p>You need Git, a running Docker installation, an amd64 Linux container environment,
+and network access to download the image's dependencies. Run the commands in a
+Bash-compatible shell.</p>
+<h2 id="build-the-runtime">Build the runtime</h2>
+<p>Clone the repository and build the image:</p>
+<pre><code class="language-bash">git clone https://github.com/Terradue/ci-eoap-container.git
+cd ci-eoap-container
+docker build -t ci-eoap-container:latest .
+</code></pre>
+<p>Docker should finish by creating the local <code>ci-eoap-container:latest</code> image.</p>
+<h2 id="create-a-cwl-document">Create a CWL document</h2>
+<p>Create a separate working directory and a minimal command-line tool:</p>
+<pre><code class="language-bash">mkdir -p tutorial-work
+cd tutorial-work
+cat &gt; hello.cwl &lt;&lt;'EOF'
+cwlVersion: v1.2
+class: CommandLineTool
+baseCommand: echo
+inputs:
+  message:
+    type: string
+    inputBinding:
+      position: 1
+outputs: []
+EOF
+</code></pre>
+<p>This document describes a command that accepts a string and passes it to <code>echo</code>.</p>
+<h2 id="validate-the-document">Validate the document</h2>
+<p>Mount the working directory into the container and run the validator:</p>
+<pre><code class="language-bash">docker run --rm \
+  -v &quot;$PWD:/work&quot; -w /work \
+  ci-eoap-container:latest \
+  cwltool --validate hello.cwl
+</code></pre>
+<p>The command should exit successfully and report that <code>hello.cwl</code> is valid CWL.
+Validation checks the document; it does not execute the described command.</p>
+<h2 id="generate-documentation">Generate documentation</h2>
+<p>Use the same image to turn the CWL into Markdown. Pass your user and group IDs
+so generated files in the mounted directory belong to you:</p>
+<pre><code class="language-bash">mkdir -p generated-docs
+docker run --rm --user &quot;$(id -u):$(id -g)&quot; -e HOME=/tmp \
+  -v &quot;$PWD:/work&quot; -w /work \
+  ci-eoap-container:latest \
+  transpiler-mate cwl2markdown hello.cwl --output ./generated-docs
+ls generated-docs
+</code></pre>
+<p>Open the generated Markdown to inspect the description of your tool.
+You have now used two tools from the same CI runtime against one mounted document.</p>
+<p>Next, use your own workflow with the <a href="../../how-to/transform-cwl/">transformation guide</a>,
+or read <a href="../../explanation/cwl-and-oci/">why CWL and OCI are used together</a>.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../.." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../how-to/build-and-run/" class="btn btn-neutral float-right" title="Build and run the container">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/ci-eoap-container" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../.." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../how-to/build-and-run/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

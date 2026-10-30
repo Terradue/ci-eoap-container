@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/ci-eoap-container/how-to/license-review/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Retrieve notices and review licenses - ci-eoap-container</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Retrieve notices and review licenses";
+        var mkdocs_page_input_path = "how-to/license-review.md";
+        var mkdocs_page_url = "/ci-eoap-container/how-to/license-review/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> ci-eoap-container
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-workflow/">Your first CWL validation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../build-and-run/">Build and run the container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../transform-cwl/">Validate and transform CWL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../publish-artifacts/">Publish a CWL artifact</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scan-and-push/">Scan and push container images</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../image-security/">Image security monitoring</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Retrieve notices and review licenses</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#download-notices-for-a-published-image">Download notices for a published image</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#generate-a-local-notice">Generate a local notice</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#review-the-ci-license-report">Review the CI license report</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../dependency-updates/">Hosted dependency updates</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../documentation/">Maintain the documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/tools/">Included tools</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/ci/">CI pipeline and artifacts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/cwl-and-oci/">CWL and OCI in the CI runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/license-evidence/">License reports and notices</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">ci-eoap-container</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">How-to guides</li>
+      <li class="breadcrumb-item active">Retrieve notices and review licenses</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/ci-eoap-container/edit/develop/docs/how-to/license-review.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="retrieve-notices-and-review-licenses">Retrieve notices and review licenses</h1>
+<h2 id="download-notices-for-a-published-image">Download notices for a published image</h2>
+<p>You need ORAS and pull access to the registry. Set <code>IMAGE_REF</code> to the exact image
+digest you want to inspect, replacing the placeholder before running the command:</p>
+<pre><code class="language-bash">IMAGE_REF='ghcr.io/terradue/ci-eoap-container@sha256:&lt;image-digest&gt;'
+oras discover --artifact-type application/vnd.eoap.license-notices.v1 &quot;$IMAGE_REF&quot;
+</code></pre>
+<p>Copy the attachment digest returned by discovery, then download it into a
+dedicated directory:</p>
+<pre><code class="language-bash">mkdir -p license-notices
+cd license-notices
+oras pull 'ghcr.io/terradue/ci-eoap-container@sha256:&lt;attachment-digest&gt;'
+</code></pre>
+<p>The attachment contains <code>LICENSE</code> and <code>NOTICE</code>. Use the attachment digest for
+the pull, rather than the image digest.</p>
+<h2 id="generate-a-local-notice">Generate a local notice</h2>
+<p>From the repository root, with the image already available to Docker:</p>
+<pre><code class="language-bash">bash scripts/generate-notice.sh ci-eoap-container:latest ./NOTICE
+</code></pre>
+<p>The collector runs in a disposable container. CI generates the notice after
+publication; a generated <code>NOTICE</code> does not need to be committed.</p>
+<h2 id="review-the-ci-license-report">Review the CI license report</h2>
+<ol>
+<li>Open the relevant <code>build</code> run in GitHub Actions.</li>
+<li>Read the job summary for license entry counts by severity.</li>
+<li>Download the <code>license-review</code> artifact within its 30-day retention period.</li>
+<li>Inspect <code>license-report.json</code> and <code>license-report.txt</code>, including UNKNOWN entries.</li>
+</ol>
+<p>Findings are report-only; scanner or report-generation errors fail CI. See
+<a href="../../explanation/license-evidence/">license reports and notices</a> for scope and
+limitations and the <a href="../../reference/ci/">CI reference</a> for severity labels.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../image-security/" class="btn btn-neutral float-left" title="Image security monitoring"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../dependency-updates/" class="btn btn-neutral float-right" title="Hosted dependency updates">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/ci-eoap-container" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../image-security/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../dependency-updates/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

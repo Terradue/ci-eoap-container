@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://terradue.github.io/ci-eoap-container/how-to/image-security/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Image security monitoring - ci-eoap-container</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Image security monitoring";
+        var mkdocs_page_input_path = "how-to/image-security.md";
+        var mkdocs_page_url = "/ci-eoap-container/how-to/image-security/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> ci-eoap-container
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Tutorials</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../tutorials/first-workflow/">Your first CWL validation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">How-to guides</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../build-and-run/">Build and run the container</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../transform-cwl/">Validate and transform CWL</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../publish-artifacts/">Publish a CWL artifact</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scan-and-push/">Scan and push container images</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Image security monitoring</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#published-inventory">Published inventory</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#dependabot">Dependabot</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#grype-and-code-scanning">Grype and code scanning</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#retrieve-or-scan-manually">Retrieve or scan manually</a>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../license-review/">Retrieve notices and review licenses</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../dependency-updates/">Hosted dependency updates</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../documentation/">Maintain the documentation</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Reference</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/tools/">Included tools</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../reference/ci/">CI pipeline and artifacts</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">Explanation</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/cwl-and-oci/">CWL and OCI in the CI runtime</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../../explanation/license-evidence/">License reports and notices</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">ci-eoap-container</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">How-to guides</li>
+      <li class="breadcrumb-item active">Image security monitoring</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/Terradue/ci-eoap-container/edit/develop/docs/how-to/image-security.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="image-sbom-and-vulnerability-monitoring">Image SBOM and vulnerability monitoring</h1>
+<h2 id="published-inventory">Published inventory</h2>
+<p>The build generates <code>sbom.cdx.json</code> (CycloneDX JSON) from the Kaniko image archive
+with Trivy, preserving application and OS packages. Skopeo records the destination
+image digest after publication. ORAS attaches the SBOM to that exact digest as an
+OCI referrer with artifact and layer type <code>application/vnd.cyclonedx+json</code>.
+The <code>image-sbom</code> Actions artifact retains the full inventory for 30 days.
+License notices remain a separate attachment.</p>
+<p>Both security jobs retrieve this published attachment; they do not regenerate an
+inventory from a moving tag. The helper resolves the image once, discovers its
+referrers by digest, fetches the attachment manifest by digest, verifies its
+subject and type, then downloads and verifies the referenced SBOM blob. Missing,
+ambiguous, or invalid attachments fail closed. Old images without attachments
+must be rebuilt before they can be monitored this way.</p>
+<h2 id="dependabot">Dependabot</h2>
+<p>Only builds on the repository's configured default branch submit the application
+inventory to GitHub's dependency submission API. The snapshot uses stable detector
+<code>container-cyclonedx</code>, correlator <code>container-sbom</code>, and manifest <code>image-sbom</code>, so a
+new submission replaces the previous inventory rather than accumulating releases.
+The job requires <code>contents: write</code> and <code>packages: read</code> on <code>GITHUB_TOKEN</code>.</p>
+<p>The converter recursively visits nested components, reads PURLs independently of
+opaque <code>bom-ref</code> identifiers, retains distinct package versions, and deduplicates
+identical package URLs. A missing PURL version is filled from the component's
+version. It submits versioned PURLs for PyPI, npm, Maven, NuGet, RubyGems, Cargo,
+Go, Composer, Pub, Hex, and Swift. Packages without usable versioned PURLs and
+unsupported types (including RPM, Debian, APK, generic binaries) are omitted from
+the snapshot, but remain in the full SBOM scanned by Grype. Dependencies are
+reported with runtime scope without guessing direct/transitive relationships.</p>
+<p>Enable <strong>Settings → Advanced Security → Dependency graph</strong> and <strong>Dependabot
+alerts</strong> (the security settings section may be named Code security in some
+repositories). Allow Actions to grant the declared token permissions. Alerts
+require a supported GitHub Advisory Database ecosystem and a matching advisory;
+submission does not guarantee coverage of all installed software. The SBOM does
+not provide a source lockfile that Dependabot can edit to fix every image package.
+The Dependabot configuration separately checks Docker, pip, and GitHub Actions
+for version updates.</p>
+<p>See GitHub's <a href="https://docs.github.com/en/rest/dependency-graph/dependency-submission">dependency submission API</a>
+and <a href="https://docs.github.com/en/code-security/dependabot/ecosystems-supported-by-dependabot/supported-ecosystems-and-repositories">supported ecosystems</a>.</p>
+<h2 id="grype-and-code-scanning">Grype and code scanning</h2>
+<p>After each successful build/publish job, the reusable <code>scan-image.yaml</code> workflow
+scans the attached SBOM with Grype. The same workflow runs daily at 05:23 UTC
+against both <code>latest</code> and <code>latest-dev</code>. GitHub runs schedules only from the default
+branch; this workflow must be present there for daily scans to start. A manual run accepts a release image tag
+(e.g. <code>2.1.0</code>), a <code>sha256:…</code> image digest, or a full image reference.
+Tags are resolved once; attachment discovery and content retrieval use digests.</p>
+<p>HIGH or CRITICAL findings fail the scan check, including findings without fixes.
+The upload steps run even after that failure: the SBOM, image digest record, and
+SARIF report are retained as 30-day Actions artifacts, and SARIF is uploaded to
+GitHub code scanning. Scanner/runtime failures also fail the check; a report may
+not exist when the scanner cannot complete. Scheduled targets run independently.</p>
+<p><strong>Scanning happens after publication. A failed scan does not remove an already
+published image.</strong> Review alerts and publish a corrected image as appropriate.
+Daily scans use refreshed vulnerability intelligence against the original
+inventory; they cannot discover software omitted by the original SBOM generator.</p>
+<p>Enable code scanning in repository security settings and ensure Actions may
+upload SARIF (<code>security-events: write</code>). The scan job also requires
+<code>contents: read</code> and <code>packages: read</code>, with GHCR access for the repository token.
+Private/internal repositories need the applicable GitHub Code Security entitlement.
+The workflow supplies SARIF directly; a CodeQL build is not required.
+See <a href="https://docs.github.com/en/code-security/code-scanning/integrating-with-code-scanning/uploading-a-sarif-file-to-github">SARIF upload requirements</a>.</p>
+<h2 id="retrieve-or-scan-manually">Retrieve or scan manually</h2>
+<p>Install ORAS 1.3 and Python 3, and authenticate to GHCR when required:</p>
+<pre><code class="language-bash">printf '%s' &quot;$GH_TOKEN&quot; | oras login ghcr.io --username &quot;$GITHUB_ACTOR&quot; --password-stdin
+python3 scripts/image_sbom.py retrieve \
+  ghcr.io/terradue/ci-eoap-container:latest-dev sbom.cdx.json
+# Install Grype, then scan the downloaded full inventory:
+grype sbom:sbom.cdx.json --fail-on high --output sarif --file grype.sarif
+</code></pre>
+<p>The helper prints the resolved image digest. To inspect the attachment manually:</p>
+<pre><code class="language-bash">oras resolve ghcr.io/terradue/ci-eoap-container:latest-dev
+oras discover --artifact-type application/vnd.cyclonedx+json \
+  ghcr.io/terradue/ci-eoap-container@sha256:&lt;image-digest&gt;
+# Use the attachment digest, not the image digest, in this command:
+oras pull ghcr.io/terradue/ci-eoap-container@sha256:&lt;attachment-digest&gt;
+</code></pre>
+<p>From the Actions UI, choose <strong>Image vulnerability monitoring → Run workflow</strong> and
+enter a release tag or image digest to run the same reporting and threshold policy.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../scan-and-push/" class="btn btn-neutral float-left" title="Scan and push container images"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../license-review/" class="btn btn-neutral float-right" title="Retrieve notices and review licenses">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Terradue/ci-eoap-container" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../scan-and-push/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../license-review/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
