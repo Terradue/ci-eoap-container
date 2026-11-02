@@ -28,4 +28,4 @@ setuptools==84.2.1
 setuptools-scm==10.3.4
 urllib3==2.8.0
 jaraco.context==6.1.2
-wheel==0.46.2
+wheel==0.48.0
