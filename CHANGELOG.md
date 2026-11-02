@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Move Python, Node.js, and Go installation steps into scripts under `scripts/`.
 
+- Update Python dependencies: `cwl2ogcrecords` to `0.3.0`, `hatch` to `1.18.2`,
+  `ruff` to `0.17.3`, `msgpack` to `1.2.4`, and `wheel` to `0.48.0`.
+
 ### Removed
 
 - Remove the unused ChartMuseum `helm-push` plugin; Helm's built-in OCI commands support publishing charts to Harbor.
