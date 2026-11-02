@@ -7,18 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
-
-- Move Python, Node.js, and Go installation steps into scripts under `scripts/`.
-
-- Update Python dependencies: `cwl2ogcrecords` to `0.3.0`, `hatch` to `1.18.2`,
-  `ruff` to `0.17.3`, `msgpack` to `1.2.4`, and `wheel` to `0.48.0`.
-
-### Removed
-
-- Remove the unused ChartMuseum `helm-push` plugin; Helm's built-in OCI commands support publishing charts to Harbor.
-
-## [2.2.0] - 2026-10-29
+## [2.2.0] - 2026-11-02
 
 ### Added
 
@@ -30,14 +19,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Pin Node.js 24 and update image tooling and Python dependencies.
-- Build Helm, helm-unittest, the ChartMuseum plugin, yq, Task, ORAS, and Trivy from source with patched Go dependencies.
+- Build Helm, helm-unittest, yq, Task, ORAS, and Trivy from source with patched Go dependencies.
 - Remove Go toolchains and build caches from the final image.
+- Move Python, Node.js, and Go installation steps into scripts under `scripts/`.
+- Update Python dependencies: `cwl2ogcrecords` to `0.3.0`, `hatch` to `1.18.2`,
+  `ruff` to `0.17.3`, `msgpack` to `1.2.4`, and `wheel` to `0.48.0`.
+- Document exact-version Grype exceptions for remaining Rocky Linux 10.2 RPM findings.
 
 ### Fixed
 
 - Resolve high and critical image findings identified by Trivy, including issues in npm, Python packages, and bundled Go tools.
 - Build helm-unittest from source to avoid relying on a missing release archive executable.
 - Use a Grype version that can read the CycloneDX 1.7 SBOMs produced by Trivy.
+- Remove build-only pip and setuptools packages from the final image.
+
+### Removed
+
+- Remove the unused ChartMuseum `helm-push` plugin; Helm's built-in OCI commands support publishing charts to Harbor.
 
 ## [2.1.0] - 2026-10-14
 
