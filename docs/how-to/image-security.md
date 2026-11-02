@@ -66,7 +66,7 @@ Daily scans use refreshed vulnerability intelligence against the original
 inventory; they cannot discover software omitted by the original SBOM generator.
 
 The repository's [Grype exception register](../reference/vulnerability-exceptions.md)
-documents the narrow, temporary exceptions in [`.grype.yaml`](../../.grype.yaml).
+documents the narrow, temporary exceptions in the root `.grype.yaml` file.
 Each rule matches one advisory and one exact Rocky RPM version. Review and remove
 exceptions when the corresponding Rocky update becomes available.
 

@@ -13,8 +13,8 @@ docker build --pull --no-cache -t ci-eoap-container:latest .
 Use `--pull --no-cache` for security rebuilds so Docker refreshes the base image
 and reruns the system certificate update. CI explicitly disables Kaniko layer
 caching. The Dockerfile updates RPMs, explicitly installs `ca-certificates`, then
-[`scripts/install-python-deps.sh`](../../scripts/install-python-deps.sh) bootstraps pip
-26.2.2 from a SHA256-verified wheel to install requirements, then removes pip and
+`scripts/install-python-deps.sh` bootstraps pip 26.2.2 from a SHA256-verified
+wheel to install requirements, then removes pip and
 the temporary RPM installers. Use the included `uv` for Python package management
 at runtime. `certifi==2026.10.23` and `uv==0.13.6` are also pinned to include the
 certificate incident fixes. When updating pip, update its requirements pin and
