@@ -27,14 +27,16 @@ the app has repository access and discovers the configuration.
 
 Node.js is pinned to the 24.x LTS line. Renovate proposes patch/minor updates
 within that line; upgrading to another major requires a deliberate configuration
-change and runtime validation. The Dockerfile installs the official Node.js
+change and runtime validation. `scripts/install-node-tools.sh` installs the official Node.js
 archive and bundled npm, verifies the archive against upstream SHA256 sums, and
 checks the installed version. Checksums are fetched over HTTPS from Node.js; they
 are not a separately pinned signature or checksum.
 
 ## Maintain the configuration
 
-Annotations next to each Dockerfile ARG identify its upstream GitHub releases.
+Annotations next to each Dockerfile ARG identify its upstream GitHub releases. The
+Dockerfile delegates Python, Node.js, and Go tool installation to scripts under
+`scripts/` so the build steps are reviewable outside the Dockerfile.
 Separate matchers preserve the `v` prefix used by yq, Task, and Node.js and remove the
 release tag prefix for ORAS and Trivy. A third matcher tracks the CI Trivy image
 tags using the same upstream release source; the Trivy package rule groups all

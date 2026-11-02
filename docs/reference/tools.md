@@ -1,8 +1,9 @@
 # Included tools
 
 The build inputs are defined in
-[`Dockerfile`](https://github.com/Terradue/ci-eoap-container/blob/develop/Dockerfile)
-and [`requirements.txt`](https://github.com/Terradue/ci-eoap-container/blob/develop/requirements.txt).
+[`Dockerfile`](https://github.com/Terradue/ci-eoap-container/blob/develop/Dockerfile),
+[`requirements.txt`](https://github.com/Terradue/ci-eoap-container/blob/develop/requirements.txt),
+and the installation scripts under [`scripts/`](https://github.com/Terradue/ci-eoap-container/tree/develop/scripts).
 The versions below reflect those files; unpinned tools are resolved during build.
 
 ## Python packages
@@ -26,13 +27,15 @@ The versions below reflect those files; unpinned tools are resolved during build
 | `hatch` | `1.18.1` | Python project and environment management |
 | `ruff` | `0.17.2` | Python linting and formatting |
 | `pre-commit` | `4.7.0` | Git hook management |
-| `pip` | `26.2.2` | Hash-verified bootstrap before index access |
 | `certifi` | `2026.10.23` | Updated Python CA bundle |
 | `uv` | `0.13.6` | Python package management; explicit pin for the certificate incident fix |
 
-All directly installed pip packages are pinned in `requirements.txt`, including
-these development tools, so Dependabot can propose updates. Transitive Python
-dependencies are still resolved during the build; this is not a full lockfile.
+pip `26.2.2` is used only during the image build, installed from its
+SHA256-verified wheel, and removed afterward because its bundled dependencies
+lag the patched runtime packages. Use `uv` for Python package management in the
+image. Directly installed Python packages are pinned in `requirements.txt` so
+Dependabot can propose updates. Transitive Python dependencies are still
+resolved during the build; this is not a full lockfile.
 
 ## System and downloaded tools
 
@@ -47,10 +50,10 @@ dependencies are still resolved during the build; this is not a full lockfile.
 | `trivy` | `TRIVY_VERSION=0.76.1`; RPM installed, then rebuilt from source with patched Go dependencies |
 | Helm | `HELM_VERSION=v3.22.0`; built from source with Go `1.27.3` and patched Go dependencies |
 | `helm-unittest` | `v1.2.1`, built from source with Go `1.27.3` and patched Go modules |
-| Helm `cm-push` plugin | ChartMuseum `v0.11.1`, rebuilt with Go `1.27.3` and updated Go module dependencies |
-
-The RPM installation also includes ca-certificates, curl, tar, gzip, pip, setuptools, GCC, Git,
-Clang, OpenSSL, the Node.js runtime libraries, and wget. Go source builds target Linux amd64.
+The RPM installation also includes ca-certificates, curl, tar, gzip, GCC, Git,
+Clang, OpenSSL, the Node.js runtime libraries, and wget. Build-only RPM
+installers pip and setuptools are removed after Python dependencies are installed.
+Go source builds target Linux amd64.
 
 ## Runtime defaults
 

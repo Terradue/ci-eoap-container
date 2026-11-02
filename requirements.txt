@@ -19,11 +19,11 @@ pre-commit==4.7.0
 # Certificate incident mitigation: uv >=0.13.4 is required.
 # https://discuss.python.org/t/109576
 uv==0.13.6
-# Fixed CA bundles: keep pip's Dockerfile bootstrap URL/hash in sync.
+# Fixed CA bundles: keep pip's bootstrap URL/hash in sync with scripts/install-python-deps.sh.
 pip==26.2.2
 certifi==2026.10.23
 # Security fixes identified by the image scan.
-msgpack==1.2.3
+msgpack==1.2.4
 setuptools==84.2.1
 setuptools-scm==10.3.4
 urllib3==2.8.0

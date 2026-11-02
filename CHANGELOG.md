@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Move Python, Node.js, and Go installation steps into scripts under `scripts/`.
+
+### Removed
+
+- Remove the unused ChartMuseum `helm-push` plugin; Helm's built-in OCI commands support publishing charts to Harbor.
+
 ## [2.2.0] - 2026-10-29
 
 ### Added
