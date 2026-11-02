@@ -65,6 +65,11 @@ published image.** Review alerts and publish a corrected image as appropriate.
 Daily scans use refreshed vulnerability intelligence against the original
 inventory; they cannot discover software omitted by the original SBOM generator.
 
+The repository's [Grype exception register](../reference/vulnerability-exceptions.md)
+documents the narrow, temporary exceptions in [`.grype.yaml`](../../.grype.yaml).
+Each rule matches one advisory and one exact Rocky RPM version. Review and remove
+exceptions when the corresponding Rocky update becomes available.
+
 Enable code scanning in repository security settings and ensure Actions may
 upload SARIF (`security-events: write`). The scan job also requires
 `contents: read` and `packages: read`, with GHCR access for the repository token.
