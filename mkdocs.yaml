@@ -46,6 +46,7 @@ nav:
   - Reference:
       - Included tools: reference/tools.md
       - CI pipeline and artifacts: reference/ci.md
+      - Temporary vulnerability exceptions: reference/vulnerability-exceptions.md
   - Explanation:
       - CWL and OCI in the CI runtime: explanation/cwl-and-oci.md
       - License reports and notices: explanation/license-evidence.md

@@ -1,0 +1,144 @@
+# Temporary exceptions for findings in Rocky Linux 10.2 RPMs where the current
+# image build has no fixed Rocky package available. Each rule is restricted to
+# one advisory, RPM, and version. Review after each base-image/dependency update.
+ignore:
+  - vulnerability: CVE-2026-21441
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2024-34156
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2025-66418
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-34986
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-84445
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-27137
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-78669
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-56859
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-97031
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-41567
+    namespace: redhat:distro:redhat:10
+    package:
+      name: skopeo
+      version: 2:1.22.2-6.el10_2
+      type: rpm
+    reason: Rocky Linux 10.2 skopeo RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-92392
+    namespace: redhat:distro:redhat:10
+    package:
+      name: curl
+      version: 8.12.1-4.el10_2.7
+      type: rpm
+    reason: Rocky Linux 10.2 curl RPM remains below upstream fixed version 8.23.0; recheck for a Rocky backport.
+  - vulnerability: CVE-2026-76641
+    namespace: redhat:distro:redhat:10
+    package:
+      name: expat
+      version: 2.7.3-1.el10_2.7
+      type: rpm
+    reason: Rocky Linux 10.2 expat RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-76642
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Red Hat reports fixes are being pursued. Recheck for a Rocky update.
+  - vulnerability: CVE-2026-78408
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-53615
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-78410
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-53613
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-53612
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-53614
+    namespace: redhat:distro:redhat:10
+    package:
+      name: util-linux
+      version: 2.40.2-18.el10
+      type: rpm
+    reason: Rocky Linux 10.2 util-linux RPM; Grype reports no fixed package version. Recheck after repository updates.
+  - vulnerability: CVE-2026-4878
+    namespace: redhat:distro:redhat:10
+    package:
+      name: libcap
+      version: 2.69-7.el10_1.1
+      type: rpm
+    reason: Rocky Linux 10.2 x86_64 repositories publish 2.69-7.el10_1.1; the Grype-listed fixed build is not in that repository. Recheck for a Rocky erratum.

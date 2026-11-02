@@ -7,17 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-02
+
+### Added
+
+- Attach CycloneDX SBOM and license notice artifacts to published image digests.
+- Monitor published image vulnerabilities and submit supported package inventory to GitHub's dependency graph.
+- Publish a Trivy license review report for each image build.
+- Configure hosted Renovate updates for pinned tool releases.
+
+### Changed
+
+- Pin Node.js 24 and update image tooling and Python dependencies.
+- Build Helm, helm-unittest, yq, Task, ORAS, and Trivy from source with patched Go dependencies.
+- Remove Go toolchains and build caches from the final image.
+- Move Python, Node.js, and Go installation steps into scripts under `scripts/`.
+- Update Python dependencies: `cwl2ogcrecords` to `0.3.0`, `hatch` to `1.18.2`,
+  `ruff` to `0.17.3`, `msgpack` to `1.2.4`, and `wheel` to `0.48.0`.
+- Document exact-version Grype exceptions for remaining Rocky Linux 10.2 RPM findings.
+
+### Fixed
+
+- Resolve high and critical image findings identified by Trivy, including issues in npm, Python packages, and bundled Go tools.
+- Build helm-unittest from source to avoid relying on a missing release archive executable.
+- Use a Grype version that can read the CycloneDX 1.7 SBOMs produced by Trivy.
+- Remove build-only pip and setuptools packages from the final image.
+
+### Removed
+
+- Remove the unused ChartMuseum `helm-push` plugin; Helm's built-in OCI commands support publishing charts to Harbor.
+
 ## [2.1.0] - 2026-10-14
 
 ### Added
 
-- eoap-cwlwrap` v0.32.0
+- Add the `eoap-cwlwrap` v0.32.0 plugin.
 
 ### Changed
 
 - `cwl2markdown` bumps to v0.2.3
 
-## [2.0.0] - 2026-13-13
+## [2.0.0] - 2026-10-13
 
 ### Changed
 
@@ -145,7 +175,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `release.yaml` image metadata for `ghcr.io/terradue/ci-eoap-container:1.0.0`.
 - Added README documentation with build and CI usage examples.
 
-[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/Terradue/ci-eoap-container/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/Terradue/ci-eoap-container/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/Terradue/ci-eoap-container/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.11.0...v2.0.0
 [1.11.0]: https://github.com/Terradue/ci-eoap-container/compare/v1.10.0...v1.11.0
