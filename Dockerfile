@@ -12,7 +12,7 @@ ARG TASK_VERSION=v3.54.0
 # renovate: datasource=github-releases depName=aquasecurity/trivy
 ARG TRIVY_VERSION=0.76.1
 # renovate: datasource=github-releases depName=nodejs/node
-ARG NODE_VERSION=v24.22.1
+ARG NODE_VERSION=v24.22.3
 # renovate: datasource=npm depName=npm
 ARG NPM_VERSION=12.2.1
 # renovate: datasource=npm depName=undici
