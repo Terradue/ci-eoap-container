@@ -15,7 +15,7 @@ docker run --rm \
 docker run --rm \
   -v "$PWD/.local-ci:/work" \
   -e TRIVY_DB_REPOSITORY=ghcr.io/aquasecurity/trivy-db \
-  aquasec/trivy:0.76.1 \
+  aquasec/trivy:0.76.2 \
   image --input /work/image.tar \
   --format cyclonedx --output /work/sbom.cdx.json
 

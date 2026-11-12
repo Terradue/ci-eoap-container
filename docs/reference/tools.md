@@ -47,7 +47,7 @@ resolved during the build; this is not a full lockfile.
 | `task` | `TASK_VERSION=v3.54.0`; built from source with Go `1.27.3` and patched Go modules |
 | `skopeo`, `jq`, `python3` | RPM repositories, unpinned |
 | `nodejs`, bundled `npm` | `NODE_VERSION=v24.22.1`; upstream Linux x64 archive checked against release SHA256 sums, then npm updated to `12.2.1` with patched `undici` and `ip-address` dependencies |
-| `trivy` | `TRIVY_VERSION=0.76.1`; RPM installed, then rebuilt from source with patched Go dependencies |
+| `trivy` | `TRIVY_VERSION=0.76.2`; RPM installed, then rebuilt from source with patched Go dependencies |
 | Helm | `HELM_VERSION=v3.22.0`; built from source with Go `1.27.3` and patched Go dependencies |
 | `helm-unittest` | `v1.2.1`, built from source with Go `1.27.3` and patched Go modules |
 The RPM installation also includes ca-certificates, curl, tar, gzip, GCC, Git,
@@ -61,6 +61,6 @@ The Dockerfile creates user `neo` with UID/GID `2000` and sets `HOME=/home/neo`.
 It does not set a `USER` instruction, so Docker runs commands as root by default.
 Use `--user` to override this when writing files into a host-mounted directory.
 
-The runtime and [CI pipeline](ci.md) both pin Trivy to `0.76.1`. When upgrading,
+The runtime and [CI pipeline](ci.md) both pin Trivy to `0.76.2`. When upgrading,
 update the Dockerfile build argument and all Trivy image references in the build
 workflow together, then validate CycloneDX generation and license reporting.

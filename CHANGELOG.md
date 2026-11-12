@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.2.1] - 2026-11-12
 
+### Changed
+
+- Update Trivy to `0.76.2`, available in the configured RPM repository.
+
 ### Fixed
 
 - Repair the empty shebang in the generated `cwltool` launcher so it executes
