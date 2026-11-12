@@ -30,6 +30,13 @@ cd /
 python3 -m pip install --prefix=/usr/local --no-cache-dir --ignore-installed \
   --find-links="$wheelhouse" --only-binary=bagit -r /tmp/requirements.txt
 
+cwltool_shebang=$(head -n 1 /usr/local/bin/cwltool)
+if [[ "$cwltool_shebang" == '#!' ]]; then
+  python_path=$(command -v python3)
+  sed -i "1c\\#!${python_path}" /usr/local/bin/cwltool
+fi
+/usr/local/bin/cwltool --version
+
 rm -rf "$wheelhouse" "$source_dir" "$archive"
 
 # pip is a build-time installer. Its bundled msgpack and urllib3 copies lag the
