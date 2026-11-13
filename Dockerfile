@@ -4,7 +4,7 @@ FROM rockylinux/rockylinux:10.2-minimal
 ENV HOME=/home/neo
 
 # renovate: datasource=github-releases depName=mikefarah/yq
-ARG YQ_VERSION=v4.54.1
+ARG YQ_VERSION=v4.54.3
 # renovate: datasource=github-releases depName=oras-project/oras
 ARG ORAS_VERSION=1.3.6
 # renovate: datasource=github-releases depName=go-task/task
