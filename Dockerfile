@@ -10,7 +10,7 @@ ARG ORAS_VERSION=1.3.6
 # renovate: datasource=github-releases depName=go-task/task
 ARG TASK_VERSION=v3.54.0
 # renovate: datasource=github-releases depName=aquasecurity/trivy
-ARG TRIVY_VERSION=0.76.1
+ARG TRIVY_VERSION=0.76.2
 # renovate: datasource=github-releases depName=nodejs/node
 ARG NODE_VERSION=v24.22.1
 # renovate: datasource=npm depName=npm
