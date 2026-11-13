@@ -18,7 +18,7 @@ ARG NPM_VERSION=12.2.1
 # renovate: datasource=npm depName=undici
 ARG UNDICI_VERSION=6.29.1
 # renovate: datasource=npm depName=ip-address
-ARG IP_ADDRESS_VERSION=10.7.4
+ARG IP_ADDRESS_VERSION=10.7.6
 # renovate: datasource=github-releases depName=helm-unittest/helm-unittest
 ARG HELM_UNITTEST_VERSION=v1.2.1
 # renovate: datasource=github-releases depName=helm/helm
