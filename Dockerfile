@@ -22,7 +22,7 @@ ARG IP_ADDRESS_VERSION=10.7.6
 # renovate: datasource=github-releases depName=helm-unittest/helm-unittest
 ARG HELM_UNITTEST_VERSION=v1.2.1
 # renovate: datasource=github-releases depName=helm/helm
-ARG HELM_VERSION=v3.22.1
+ARG HELM_VERSION=v4.3.2
 
 COPY requirements.txt /tmp/requirements.txt
 COPY scripts/install-python-deps.sh scripts/install-node-tools.sh scripts/build-go-tools.sh /usr/local/bin/
