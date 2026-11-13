@@ -14,7 +14,7 @@ ARG TRIVY_VERSION=0.76.2
 # renovate: datasource=github-releases depName=nodejs/node
 ARG NODE_VERSION=v24.22.1
 # renovate: datasource=npm depName=npm
-ARG NPM_VERSION=12.2.1
+ARG NPM_VERSION=12.2.2
 # renovate: datasource=npm depName=undici
 ARG UNDICI_VERSION=6.29.1
 # renovate: datasource=npm depName=ip-address
